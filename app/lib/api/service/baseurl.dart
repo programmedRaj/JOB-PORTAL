@@ -8,4 +8,6 @@ class BaseUrl {
   final String appliedjobs = "$basic/user-applied-jobs";
   final String addresume = "$basic/resume";
   final String displayresume = "$basic/resume-details";
+  final String enrollcourse = "$basic/enroll-course";
+  final String displayenrollcourse = "$basic/user-enrolled-courses";
 }

@@ -192,12 +192,16 @@ class _HireContainerState extends State<HireContainer> {
                                       ? Text(
                                           'Submitted',
                                           style: TextStyle(
-                                              color: Colors.yellow,
+                                              color: isDarkk
+                                                  ? Colors.blue
+                                                  : Colors.blueGrey,
                                               fontSize: 18),
                                         )
                                       : Text(widget.status,
                                           style: TextStyle(
-                                              color: Colors.blue,
+                                              color: isDarkk
+                                                  ? Colors.blue
+                                                  : Colors.blueGrey,
                                               fontSize: 18))),
                             ],
                           ),

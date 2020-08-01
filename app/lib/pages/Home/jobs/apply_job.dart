@@ -37,12 +37,13 @@ class _AppliedJobsState extends State<AppliedJobs> {
     if (response.statusCode == 200) {
       var k = response.body;
       var n = json.decode(k);
+      print(n);
       appliedJobs.remove();
-      for (int i = 0; i < n['applied-jobs'].length; i++) {
+      for (int i = 0; i < n['appliedjobs'].length; i++) {
         appliedJobs.addj(
-            jobid: n['applied-jobs'][i]['job_id'],
-            appliedon: n['applied-jobs'][i]['applied_on'],
-            status: n['applied-jobs'][i]['status']);
+            jobid: n['appliedjobs'][i]['job_id'],
+            appliedon: n['appliedjobs'][i]['applied_on'],
+            status: n['appliedjobs'][i]['status']);
       }
     }
   }
@@ -110,10 +111,9 @@ class _AppliedJobsState extends State<AppliedJobs> {
                   itemCount: appliedspro.jobs.length,
                   itemBuilder: (context, index) {
                     return HireContainer(
-                      jobid: appliedspro.jobs[index].jobid,
-                      isDark: isDarkk,
-                      status: appliedspro.jobs[index].status
-                    );
+                        jobid: appliedspro.jobs[index].jobid,
+                        isDark: isDarkk,
+                        status: appliedspro.jobs[index].status);
                   }),
         )));
   }

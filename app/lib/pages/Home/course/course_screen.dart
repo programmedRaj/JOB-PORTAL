@@ -170,6 +170,7 @@ class _AllCourseState extends State<AllCourse> {
                         context,
                         MaterialPageRoute(
                             builder: (ctx) => ProductDetial(
+                                  courseid: courses.coursess[index].courseid,
                                   courselink: courses.coursess[index].link,
                                   coursename: courses.coursess[index].title,
                                 )));

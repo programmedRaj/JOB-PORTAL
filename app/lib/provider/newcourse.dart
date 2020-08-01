@@ -6,6 +6,30 @@ class Courseexact with ChangeNotifier {
   List<Course> coursess = [];
 
   List<Course> get courses => coursess;
+//-------------------------------------------------------------------------
+  int courseid;
+  int get courseids => courseid;
+
+  void addid(int id) {
+    courseid = id;
+    notifyListeners();
+  }
+
+//-------------------------------------------------------------------------
+  List<Course> enrollcourse = [];
+  List<Course> get enco => enrollcourse;
+
+  void addenrollcourse({String courseid}) {
+    // enrollcourse.add(Course(courseid: ));
+    notifyListeners();
+  }
+
+  void removeenroll() {
+    enrollcourse.clear();
+    notifyListeners();
+  }
+
+//-------------------------------------------------------------------------
 
   void addr(
       {String category,

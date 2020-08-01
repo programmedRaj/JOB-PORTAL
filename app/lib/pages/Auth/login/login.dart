@@ -45,7 +45,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     super.initState();
 
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 3000), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
     _controller.forward();
   }
 
@@ -322,6 +322,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             : Column(
                                 children: [
                                   TextFormField(
+                                    obscureText: true,
                                     onChanged: (val) {
                                       setState(() {
                                         password = val;

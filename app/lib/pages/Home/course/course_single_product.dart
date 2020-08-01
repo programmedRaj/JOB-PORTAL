@@ -1,7 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:retry/retry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sih/api/service/baseurl.dart';
+import 'package:sih/provider/newcourse.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProductDetial extends StatelessWidget {
+import 'package:http/http.dart' as http;
+
+class ProductDetial extends StatefulWidget {
   final int courseid;
   final String coursename;
   final String courseimage;
@@ -13,10 +24,57 @@ class ProductDetial extends StatelessWidget {
     this.courseimage,
     this.courselink,
   }) : super(key: key);
+
+  @override
+  _ProductDetialState createState() => _ProductDetialState();
+}
+
+class _ProductDetialState extends State<ProductDetial> {
+  int alreadyen;
+  BaseUrl baseUrl = BaseUrl();
+
+  Future enroll() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    var bodymsg = json.encode({"course_id": widget.courseid});
+
+    var response = await retry(
+      () => http
+          .post(baseUrl.enrollcourse,
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+              },
+              body: bodymsg)
+          .timeout(Duration(seconds: 5)),
+      retryIf: (e) => e is SocketException || e is TimeoutException,
+    );
+
+    // print(response.statusCode);
+    var k = response.body;
+    var n = json.decode(k);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        alreadyen = 1;
+      });
+    } else if (response.statusCode == 403) {
+      setState(() {
+        alreadyen = 0;
+      });
+    } else {
+      setState(() {
+        alreadyen = 0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final course = Provider.of<Courseexact>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -52,7 +110,7 @@ class ProductDetial extends StatelessWidget {
                         width: width * 0.8,
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          coursename,
+                          widget.coursename,
                           maxLines: 4,
                           style: TextStyle(fontSize: 20),
                         )),
@@ -80,10 +138,29 @@ class ProductDetial extends StatelessWidget {
                   width: width,
                   child: FlatButton(
                       onPressed: () async {
-                        if (await canLaunch(courselink)) {
-                          await launch(courselink);
-                        } else {
-                          throw 'Could not launch ';
+                        enroll();
+                        if (alreadyen == 1) {
+                          course.addid(widget.courseid);
+                          if (await canLaunch(widget.courselink)) {
+                            await launch(widget.courselink);
+                          } else {
+                            throw 'Could not launch ';
+                          }
+                        } else if (alreadyen == 0) {
+                          showDialog(
+                              context: context,
+                              builder: (_) => new AlertDialog(
+                                    content:
+                                        new Text("You Have Already Applied"),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('Close me!'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  ));
                         }
                       },
                       child: Row(

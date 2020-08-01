@@ -1,20 +1,69 @@
-import 'package:flutter/material.dart';
-import 'package:sih/language/generated/l10n.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
-class Mycourse extends StatelessWidget {
-  //ye response.body mai list hai na?
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:retry/retry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sih/api/service/baseurl.dart';
+import 'package:sih/language/generated/l10n.dart';
+import 'package:http/http.dart' as http;
+import 'package:sih/provider/newcourse.dart';
+
+class Mycourse extends StatefulWidget {
   final bool isDarkk;
-  const Mycourse(
+  Mycourse(
     this.isDarkk,
   );
+
+  @override
+  _MycourseState createState() => _MycourseState();
+}
+
+class _MycourseState extends State<Mycourse> {
+  final BaseUrl baseUrl = BaseUrl();
+
+  Future myenroll(Courseexact c) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+
+    var response = await retry(
+      () => http.get(
+        baseUrl.displayenrollcourse,
+        headers: {"Content-Type": "application/json", "Authorization": token},
+      ).timeout(Duration(seconds: 5)),
+      retryIf: (e) => e is SocketException || e is TimeoutException,
+    );
+
+    // print(response.statusCode);
+    var k = response.body;
+    var n = json.decode(k);
+    print(n);
+    // c.removeenroll();
+    // for (int i = 0; i < n['enrolled-courses'].length; i++) {
+    //   c.addenrollcourse(courseid: n['enrolled-courses']['course_id']);
+    // }
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final cp = Provider.of<Courseexact>(context, listen: false);
+      myenroll(cp);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final delegate = S.of(context);
+    final courselist = Provider.of<Courseexact>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: isDarkk
+        backgroundColor: widget.isDarkk
             ? Theme.of(context).accentColor
             : Theme.of(context).hintColor.withOpacity(0.4),
         iconTheme: Theme.of(context).iconTheme,
@@ -25,14 +74,14 @@ class Mycourse extends StatelessWidget {
       ),
       body: Container(
         child: ListView.builder(
-            itemCount: 9,
+            itemCount: courselist.coursess.length,
             itemBuilder: (context, index) {
               return Container(
                   height: height * 0.2,
                   width: width,
                   margin: EdgeInsets.only(left: 10, right: 10, top: 15),
                   decoration: BoxDecoration(
-                      color: isDarkk
+                      color: widget.isDarkk
                           ? Theme.of(context).primaryColor
                           : Theme.of(context).hintColor.withOpacity(0.6),
                       boxShadow: [
