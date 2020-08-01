@@ -52,8 +52,8 @@ def ustatus():
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
     try:
-        cur.execute("Update enrolled_jobs SET  status ='" +
-                    str(request.json["ustatus"])+"' Where user_id ='"+str(request.json['user_id'])+"' and  job_id = '"+str(request.json['job_id'])+"';")
+        cur.execute("SET SQL_SAFE_UPDATES = 0; Update enrolled_jobs SET  status ='" +
+                    str(request.json["ustatus"])+"' Where user_id ='"+str(request.json['user_id'])+"' and  job_id = '"+str(request.json['job_id'])+"'; SET SQL_SAFE_UPDATES = 1;")
         resp = jsonify({"message": 'success'})
         resp.status_code = 200
         return resp
@@ -67,9 +67,11 @@ def dispstatus():
     cur = conn.cursor(pymysql.cursors.DictCursor)
     try:
         j = request.json['user_id']
+        k = request.json['job_id']
         cur.execute("Select * FROM enrolled_jobs WHERE user_id ='" +
-                    str(j)+"';")
-        return cur
+                    str(j)+"' and job_id = '"+str(k)+"';")
+        r = cur.fetchone()
+        return jsonify({'status': r['status']})
     finally:
         cur.close()
         conn.close()
