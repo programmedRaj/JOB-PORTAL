@@ -20,10 +20,10 @@ const ViewCourses = () => {
 				<Typography gutterBottom={true} variant='h5'>
 					View all Courses
 				</Typography>
-				<Grid container spacing={3}>
+				<Grid container spacing={5}>
 					{courses && courses.length > 0 ? (
 						courses.map((course, index) => (
-							<Grid key={index} item xs={12} sm={6} md={4}>
+							<Grid key={index} item xs={12} sm={6}>
 								<CourseCard course={course} />
 							</Grid>
 						))

@@ -25,10 +25,10 @@ const ViewJob = () => {
 					<TypoGraphy gutterBottom={true} variant='h5'>
 						{t('View all jobs')}
 					</TypoGraphy>
-					<Grid container spacing={2}>
+					<Grid container spacing={5}>
 						{jobs && jobs.length > 0 ? (
 							jobs.map((job, index) => (
-								<Grid key={index} item xs={12} sm={6} md={4}>
+								<Grid key={index} item xs={12} sm={6}>
 									<JobCard job={job} />
 								</Grid>
 							))
