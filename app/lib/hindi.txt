@@ -1,0 +1,168 @@
+
+
+---------------Login---------------------------
+Number = 
+मोबाइल नंबर
+
+ Enter Your Mobile number =
+अपना मोबाइल नंबर दर्ज करें
+
+Mobile number should be atleast 10 digits =मोबाइल नंबर कम से कम 10 अंकों का होना चाहिए
+
+Mobile number can\'t be more than 10 digits =मोबाइल नंबर 10 अंकों से अधिक नहीं हो सकता
+
+Login with OTP if you want to Login with Password turn switch off = अगर आप पासवर्ड टर्न स्विच ऑफ के साथ लॉगिन करना चाहते हैं तो ओटीपी के साथ लॉगिन करें
+
+
+Password = पासवर्ड
+
+Enter Your Password = अपना पासवर्ड डालें
+
+Password should be atleast 6 digits = पासवर्ड कम से कम 6 अंकों का होना चाहिए
+
+If You Forget Password you can login with otp = यदि आप पासवर्ड भूल जाते हैं तो आप otp से लॉगिन कर सकते हैं
+
+Forget Password?  = पासवर्ड भूल गए?
+
+verify = सत्यापित करें
+
+resend = पुनः भेजें
+
+generate otp = ओटीपी जनरेट करें
+
+Login = लॉगिन
+
+register = रजिस्टर करें
+
+New Here? = यहाँ नये?
+
+Auto retrieving verification code = सत्यापन कोड स्वतः प्राप्त करना
+
+Something has gone wrong, please try later = कुछ गड़बड़ हो गई है, कृपया बाद में प्रयास करें
+
+Please check your internet connection and try again = अपने इंटरनेट कनेक्शन की जाँच करें और पुन: प्रयास करें
+
+timeout = समय समाप्त
+
+code sent to = को भेजा गया कोड
+
+You Are Verified = आप सत्यापित हैं
+
+
+
+----------------------------------Home -------------------------------------
+
+
+Internships = इंटर्नशिप   "jobs aaega idhr so use  PageTitle"
+
+edit resume = संपादित करें resume
+
+Applied Jobs = लागू नौकरियां
+
+courses = पाठ्यक्रम
+
+all courses = सभी पाठ्यक्रम
+
+my courses = मेरे पाठ्यक्रम
+
+know more = अधिक जानिए
+
+----------------------------- internship detials-----------------------------
+
+apply now = 
+अभी आवेदन करें
+
+perks = सुविधाएं
+
+About Us = हमारे बारे में
+
+day to day task = डे टू डे टास्क
+
+skills = कौशल
+
+------------------------ intership apply --------------------------------------
+
+proceed to application = आवेदन के लिए आगे बढ़ें
+
+edit your resume = अपने को संपादित करें resume
+
+You have successfully applied for this job = आपने इस नौकरी के लिए सफलतापूर्वक आवेदन किया है
+
+---------------------------edit resume -------------------------------------------
+
+personal detials = व्यक्तिगत हिरासत
+
+ first name = पहला नाम
+
+last name = अंतिम नाम
+
+email id = ईमेल आईडी
+
+mobile number = मोबाइल नंबर
+
+location = स्थान
+
+save = सहेजें
+-----------------------------Education
+Education = शिक्षा
+
+add Education = शिक्षा जोड़ें
+
+Graduation status = स्नातक स्तर की पढ़ाई
+
+Pursuing = अभी भी चल रहा है
+
+completed = पूरा कर लिया है
+
+College = कॉलेज
+
+Degree = डिग्री
+
+stream = धारा
+
+-----------------------------job / training
+training = प्रशिक्षण
+
+add training = प्रशिक्षण जोड़ें
+
+Jobs= नौकरियां  // pageTitle
+
+add jobs = नौकरियां जोड़ें
+
+internship = 
+इंटर्नशिप
+ 
+freelancer = फ्रीलांसर
+
+profile = प्रोफ़ाइल
+ 
+organization = संगठन
+
+is working from home = घर से काम कर रहा है
+
+start date = आरंभ करने की तिथि
+
+end date = अंतिम तिथि
+
+is currently working = वर्तमान में काम कर रहा है
+
+description = विवरण
+
+------------------------project---------
+Project = परियोजना
+
+add project = प्रोजेक्ट जोड़ें
+
+title = शीर्षक
+
+project link = प्रोजेक्ट लिंक
+
+------------------------additional detials
+additional detials = अतिरिक्त हिरासत
+
+add additional detials = अतिरिक्त धारावाहिक जोड़ें
+
+view more = और देखो
+
+
+

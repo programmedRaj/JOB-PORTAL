@@ -1,0 +1,5 @@
+website/client/admin/node_modules
+website/client/user/node_modules
+
+.history
+server/__pycache__
