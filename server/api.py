@@ -663,7 +663,17 @@ def crud_job():
 
     if(request.json['mode'] == "add"):
         resp = job.create_job(username)
+        if resp == 200 or resp == 2000 :
+            resp = jsonify({'message': 'success'})
+            resp.status_code = 200
+        elif resp == 401:
+            resp = jsonify({'message': 'Error posting job.'})
+            resp.status_code = 401
+        else:
+            resp = jsonify({'message': 'Error while adding quiz but job added. '})
+            resp.status_code = 403
         return resp
+        
     elif(request.json['mode'] == "delete"):
         resp = job.delete_job(username)
         return resp

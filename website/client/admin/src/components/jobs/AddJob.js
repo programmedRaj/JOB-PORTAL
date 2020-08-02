@@ -86,6 +86,7 @@ const AddJob = () => {
 								multiple
 								id='contained-button-file'
 								type='file'
+								accept='.pdf'
 								onChange={handleUploadedFile}
 							/>
 							<label htmlFor='contained-button-file'>
