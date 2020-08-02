@@ -11,6 +11,10 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import { AuthContext } from '../../context/authContext/authContext'
 import { JobContext } from '../../context/jobContext/jobContext'
@@ -160,13 +164,13 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 							<TextField
 								required
 								margin='dense'
-								label={t('Interview Mode')}
+								label={t('Job Location')}
 								fullWidth
-								value={jobDetails.interview_mode}
+								value={jobDetails.interview_location}
 								onChange={(e) =>
 									setJobDetails({
 										...jobDetails,
-										interview_mode: e.target.value
+										interview_location: e.target.value
 									})
 								}
 							/>
@@ -195,7 +199,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 							<KeyboardDateTimePicker
 								required
 								margin='dense'
-								label={t('InterView Date')}
+								label={t('Interview Date')}
 								animateYearScrolling
 								fullWidth
 								disablePast
@@ -223,34 +227,46 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 					/>
 					<Grid container spacing={3}>
 						<Grid item sm={6} xs={12}>
-							<TextField
-								required
-								margin='dense'
-								label={t('Job Location')}
-								fullWidth
-								value={jobDetails.interview_location}
-								onChange={(e) =>
-									setJobDetails({
-										...jobDetails,
-										interview_location: e.target.value
-									})
-								}
-							/>
+							<FormControl fullWidth>
+								<InputLabel id='mode-label'>Interview Mode*</InputLabel>
+								<Select
+									labelId='mode-label'
+									required
+									fullWidth
+									margin='none'
+									value={jobDetails.interview_mode}
+									onChange={(e) =>
+										setJobDetails({
+											...jobDetails,
+											interview_mode: e.target.value
+										})
+									}
+								>
+									<MenuItem value='online'>Online</MenuItem>
+									<MenuItem value='offline'>Offline</MenuItem>
+								</Select>
+							</FormControl>
 						</Grid>
 						<Grid item sm={6} xs={12}>
-							<TextField
-								required
-								margin='dense'
-								label={t('Online Test')}
-								fullWidth
-								value={jobDetails.is_onlinetest}
-								onChange={(e) =>
-									setJobDetails({
-										...jobDetails,
-										is_onlinetest: e.target.value
-									})
-								}
-							/>
+							<FormControl fullWidth>
+								<InputLabel id='online-label'>Online Test*</InputLabel>
+								<Select
+									labelId='online-label'
+									required
+									fullWidth
+									margin='none'
+									value={jobDetails.is_onlinetest}
+									onChange={(e) =>
+										setJobDetails({
+											...jobDetails,
+											is_onlinetest: e.target.value
+										})
+									}
+								>
+									<MenuItem value='1'>Yes</MenuItem>
+									<MenuItem value='0'>No</MenuItem>
+								</Select>
+							</FormControl>
 						</Grid>
 					</Grid>
 					<Box mt={3} align='right'>

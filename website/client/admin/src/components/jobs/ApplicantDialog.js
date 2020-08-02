@@ -26,6 +26,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import './overwrite.css'
 
 import { getStatus, setDBStatus } from './functions'
+import { TextField } from '@material-ui/core'
 
 const formatSkill = (obj) => {
 	let ret = []
@@ -269,6 +270,20 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 									<MenuItem value='underreview'>Under Review</MenuItem>
 									<MenuItem value='notselected'>Not Selected</MenuItem>
 								</Select>
+								{status.status === 'underreview' ? (
+									<div style={{ marginTop: '10px' }}>
+										<TextField
+											variant='outlined'
+											margin='dense'
+											label='Meet ID'
+										/>
+										<div>
+											<Button color='secondary'>Send</Button>
+										</div>
+									</div>
+								) : (
+									<span />
+								)}
 							</>
 						) : (
 							<span />

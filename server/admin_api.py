@@ -75,7 +75,7 @@ def dispstatus():
         cur.execute("Select * FROM enrolled_jobs WHERE user_id ='" +
                     str(j)+"' and job_id = '"+str(k)+"';")
         r = cur.fetchone()
-        return jsonify({'status': r['status'], 'id': r['id']})
+        return jsonify({'status': r['status'], 'id': r['id'], 'question': r['question']})
     finally:
         cur.close()
         conn.close()
