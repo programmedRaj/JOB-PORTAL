@@ -15,7 +15,7 @@ const initialState = {
   appliedJobs: [],
   job: {},
   loading: false,
-  current: {},
+  current: [],
 };
 
 export const JobsContext = createContext(initialState);
@@ -104,7 +104,7 @@ export const JobsProvider = ({ children }) => {
       });
   };
 
-  const applyJob = (data, current, token) => {
+  const applyJob = (data, job, token) => {
     setLoading();
 
     var myHeaders = new Headers();
@@ -112,7 +112,7 @@ export const JobsProvider = ({ children }) => {
     myHeaders.append("Authorization", token);
     var raw = JSON.stringify({
       answer: data.answer,
-      job_id: current.job_id,
+      job_id: job.job_id,
     });
 
     var requestOptions = {
@@ -130,7 +130,13 @@ export const JobsProvider = ({ children }) => {
 
   // Set Current Job
   const setCurrent = (job) => {
-    dispatch({ type: SET_CURRENT, payload: job });
+    if (state.current.length < 10) {
+      dispatch({ type: SET_CURRENT, payload: job });
+    } else {
+      state.current.pop();
+      dispatch({ type: SET_CURRENT, payload: job });
+    }
+    state.current = [...new Set(state.current)];
   };
 
   // Clear Current Job

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -12,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { fetchRecommendations, fetchLocations, fetchTitles } from "./functions";
 import CourseCarousel from "./CourseCarousel";
 import { JobsContext } from "../../context/jobs/JobsContext";
+import { AuthContext } from "../../context/auth/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,7 +38,8 @@ const Home = (props) => {
   const [titles, setTitles] = useState([]);
   const [locations, setLocations] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-  const { searchJobs } = useContext(JobsContext);
+  const { current, searchJobs } = useContext(JobsContext);
+  const { isAuth } = useContext(AuthContext);
   const history = useHistory();
   const { t } = useTranslation();
 
@@ -44,11 +47,14 @@ const Home = (props) => {
   useEffect(() => {
     fetchTitles().then((res) => setTitles(res.titles));
     fetchLocations().then((res) => setLocations(res.locations));
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     fetchRecommendations(localAuthToken).then((res) =>
       setRecommendations(res.recommended_courses)
     );
-    // eslint-disable-next-line
-  }, []);
+  }, [isAuth]);
 
   const initialValues = {
     title: "",
@@ -145,17 +151,60 @@ const Home = (props) => {
           </Grid>
         </form>
       </Paper>
-      <Grid
-        container
-        direction='row'
-        justify='center'
-        alignItems='center'
-        spacing={3}
-      >
-        <Grid item md xs={12}>
-          <CourseCarousel recommendations={recommendations} />
+
+      {current.length > 2 ? (
+        <Grid
+          container
+          direction='row'
+          justify='center'
+          alignItems='center'
+          spacing={3}
+        >
+          <Grid item md xs={12}>
+            <Typography
+              style={{
+                marginTop: "10rem",
+                textAlign: "center",
+                fontWeight: "500",
+              }}
+              variant='h4'
+              gutterBottom
+            >
+              Recently Viewed Jobs
+            </Typography>
+            <CourseCarousel job={true} recommendations={current} />
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <span></span>
+      )}
+
+      {isAuth ? (
+        <Grid
+          container
+          direction='row'
+          justify='center'
+          alignItems='center'
+          spacing={3}
+        >
+          <Grid item md xs={12}>
+            <Typography
+              style={{
+                marginTop: "10rem",
+                textAlign: "center",
+                fontWeight: "500",
+              }}
+              variant='h4'
+              gutterBottom
+            >
+              Recommended Courses
+            </Typography>
+            <CourseCarousel job={false} recommendations={recommendations} />
+          </Grid>
+        </Grid>
+      ) : (
+        <span></span>
+      )}
     </>
   );
 };
