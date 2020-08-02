@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/api/models/internshipdetials.dart';
 import 'package:sih/api/service/baseurl.dart';
 import 'package:sih/language/generated/l10n.dart';
+import 'package:sih/pages/Home/video/pages/index.dart';
 import 'package:sih/provider/appliedjobprovider.dart';
 import 'package:sih/widgets/shared/hirecontainer.dart';
 import 'package:http/http.dart' as http;
@@ -96,6 +97,16 @@ class _AppliedJobsState extends State<AppliedJobs> {
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //     backgroundColor: Theme.of(context).accentColor,
+        //     child: Icon(
+        //       Icons.video_call,
+        //       color: Theme.of(context).primaryColor,
+        //     ),
+        //     onPressed: () {
+        //       Navigator.of(context).push(
+        //           MaterialPageRoute(builder: (ctx) => IndexPage(isDarkk)));
+        //     }),
         // drawer: draw(context, height),
         body: SingleChildScrollView(
             child: Container(

@@ -45,6 +45,8 @@ dependencies:
   dynamic_color_theme: ^1.1.1
   flutter_svg: ^0.18.0
   flutter_icons: ^1.1.0
+  agora_rtc_engine: ^1.0.13
+  permission: ^0.1.7
 
 dev_dependencies:
   flutter_test:

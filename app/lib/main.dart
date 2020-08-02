@@ -12,7 +12,7 @@ import 'package:sih/provider/userprovider.dart';
 import 'language/generated/l10n.dart';
 import 'provider/appliedjobprovider.dart';
 import 'provider/newcourse.dart';
-import 'routes/route.dart';
+import 'routes/route.dart'; //abc
 
 void main() {
   runApp(MyApp());

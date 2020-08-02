@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:sih/pages/Home/video/pages/index.dart';
 
 import 'package:sih/provider/internship.dart';
 
@@ -52,7 +53,7 @@ class _HireContainerState extends State<HireContainer> {
                 Container(
                     margin: EdgeInsets.only(
                         top: 15, left: 15, right: 15, bottom: 15),
-                    height: height * 0.36,
+                    height: height * 0.50,
                     width: width,
                     decoration: BoxDecoration(
                         color: widget.isDark
@@ -180,29 +181,66 @@ class _HireContainerState extends State<HireContainer> {
                             height: height * 0.02,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Row(
+                                children: [
+                                  Container(
+                                      child: Text(
+                                    'Status:  ',
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(context).highlightColor),
+                                  )),
+                                  Container(
+                                      child: widget.status == null
+                                          ? Text(
+                                              'Submitted',
+                                              style: TextStyle(
+                                                  color: isDarkk
+                                                      ? Colors.blue
+                                                      : Colors.blueGrey,
+                                                  fontSize: 18),
+                                            )
+                                          : Text(widget.status,
+                                              style: TextStyle(
+                                                  color: isDarkk
+                                                      ? Colors.blue
+                                                      : Colors.blueGrey,
+                                                  fontSize: 18))),
+                                ],
+                              ),
                               Container(
-                                  child: Text(
-                                'Status:  ',
-                                style: TextStyle(
-                                    color: Theme.of(context).highlightColor),
-                              )),
-                              Container(
-                                  child: widget.status == null
-                                      ? Text(
-                                          'Submitted',
-                                          style: TextStyle(
-                                              color: isDarkk
-                                                  ? Colors.blue
-                                                  : Colors.blueGrey,
-                                              fontSize: 18),
-                                        )
-                                      : Text(widget.status,
-                                          style: TextStyle(
-                                              color: isDarkk
-                                                  ? Colors.blue
-                                                  : Colors.blueGrey,
-                                              fontSize: 18))),
+                                margin: EdgeInsets.only(right: 20),
+                                child: widget.status == 'underreview'
+                                    ? IconButton(
+                                        icon: Icon(
+                                          Icons.video_call,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (ctx) =>
+                                                      IndexPage(isDarkk)));
+                                        })
+                                    : GestureDetector(
+                                        onTap: () {
+                                          Tooltip(
+                                              message:
+                                                  'You need be selected for next round');
+                                        },
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.video_call,
+                                              size: 30,
+                                              color:
+                                                  Theme.of(context).errorColor,
+                                            ),
+                                            onPressed: () {}),
+                                      ),
+                              )
                             ],
                           ),
                         ],
