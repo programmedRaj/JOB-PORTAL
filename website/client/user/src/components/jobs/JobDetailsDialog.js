@@ -68,8 +68,7 @@ const JobDetailsDialog = ({ detailsOpen, setDetailsOpen, job }) => {
   const onSubmit = (data) => {
     console.log(data);
     console.log(job);
-    console.log(current);
-    applyJob(data, current, localAuthToken).then((res) => {
+    applyJob(data, job, localAuthToken).then((res) => {
       if (res === true) {
         showAlert("Applied Job");
       } else {
@@ -184,7 +183,7 @@ const JobDetailsDialog = ({ detailsOpen, setDetailsOpen, job }) => {
             </Grid>
             <Grid item style={{ width: "100%" }} sm={6}>
               <Typography gutterBottom variant='h6'>
-                {t("Apply for this Job")}
+                {t("What makes you an ideal candidate for this position?")}
               </Typography>
 
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -198,12 +197,6 @@ const JobDetailsDialog = ({ detailsOpen, setDetailsOpen, job }) => {
                   inputRef={register({ required: true })}
                   error={!!errors.answer}
                   helperText={!!errors.answer && "This is a required field."}
-                />
-                <input
-                  type='hidden'
-                  value={job.job_id}
-                  name='job_id'
-                  inputRef={register()}
                 />
                 <Button autoFocus color='secondary'>
                   Apply

@@ -34,8 +34,6 @@ const CourseCard = ({ course }) => {
     });
   };
 
-  console.log(course)
-
   return (
     <Paper className={classes.card}>
       <Typography noWrap noWrap variant='h6'>
