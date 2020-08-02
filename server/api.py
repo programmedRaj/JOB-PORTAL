@@ -41,7 +41,7 @@ import admin_api as ad_api
 import no_auth_apis as no_auth
 import courses as courses
 import recommendation as recommend
-# import resumeocr as rocr
+import resumeocr as rocr
 CORS(app)
 
 
@@ -580,7 +580,7 @@ def upload_file():
         resp = jsonify({'message': 'No file selected for uploading'})
         resp.status_code = 400
         return resp
-    if file and allowed_file(file.filename):
+    if file and allowedd_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         s = extractpdf.yoohoo(filename)
@@ -646,7 +646,7 @@ def upload_file():
     #     return resp
 
 
-def allowed_file(filename):
+def allowedd_file(filename):
     ALLOWED_EXTENSIONS = set(['pdf'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
