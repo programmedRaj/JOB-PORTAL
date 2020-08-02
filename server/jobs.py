@@ -18,28 +18,45 @@ def get_random_alphanumeric_string(length):
     result_str = ''.join((random.choice(letters_and_digits)
                           for i in range(length)))
     return result_str
-
+jobidd=get_random_alphanumeric_string(8)
 
 def create_job(naam):
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur1 = conn.cursor(pymysql.cursors.DictCursor)
     try:
-        datetimee = datetime.datetime.fromtimestamp(
-            int(request.json['closing_date']) / 1e3).strftime("%Y-%m-%d %H:%M:%S")
-        date_int = datetime.datetime.fromtimestamp(
-            int(request.json['datetime_interview']) / 1e3).strftime("%Y-%m-%d %H:%M:%S")
-        cur.execute("INSERT INTO job(posted_by,job_id,closing_date,description,pos_names,no_postions,stipend,qualification,extra_info,interview_mode,interveiw_loc,date_time_interview,is_online_test) VALUES('" + str(naam['username'])+"','" +
-                    get_random_alphanumeric_string(8)+"','"+str(datetimee) + "','"+str(request.json['description']) + "','"+str(request.json['jobtitle']) +
-                    "','"+str(request.json['vacancies']) + "','"+str(request.json['stipend']) + "','"+str(request.json['qualification']) + "','"+str(request.json['extra_info']) +
-                    "','"+str(request.json['interview_mode'])+"','" + str(request.json['interview_location']) + "','"+str(date_int) + "','"+str(request.json['is_onlinetest']) + "');")
-        conn.commit()
-        if cur:
-            resp = jsonify({'message': 'success'})
-            resp.status_code = 200
+        def only_job():
+            datetimee = datetime.datetime.fromtimestamp(
+                int(request.json['closing_date']) / 1e3).strftime("%Y-%m-%d %H:%M:%S")
+            date_int = datetime.datetime.fromtimestamp(
+                int(request.json['datetime_interview']) / 1e3).strftime("%Y-%m-%d %H:%M:%S")
+            cur.execute("INSERT INTO job(posted_by,job_id,closing_date,description,pos_names,no_postions,stipend,qualification,extra_info,interview_mode,interveiw_loc,date_time_interview,is_online_test) VALUES('" + str(naam['username'])+"','" +
+                        str(jobidd)+"','"+str(datetimee) + "','"+str(request.json['description']) + "','"+str(request.json['jobtitle']) +
+                        "','"+str(request.json['vacancies']) + "','"+str(request.json['stipend']) + "','"+str(request.json['qualification']) + "','"+str(request.json['extra_info']) +
+                        "','"+str(request.json['interview_mode'])+"','" + str(request.json['interview_location']) + "','"+str(date_int) + "','"+str(request.json['is_onlinetest']) + "');")
+            conn.commit()
+            if cur:
+                return 200 #success job
+            return 401 #error posting job
+
+
+        if request.json['is_onlinetest'] == 0:
+            resp=only_job()
             return resp
-        resp = jsonify({'message': 'Error.'})
-        resp.status_code = 401
-        return resp
+
+            
+        elif request.json['is_onlinetest'] == 1:
+            responnses=only_job()
+            if responnses == 200 :
+                cur1.execute("INSERT INTO quiz(jobid,questions) VALUES('" + str(jobidd)+"','" +str(request.json['qnalist']) + "');")
+                conn.commit()
+                if cur1:
+                    return 2000 # success both
+                return 400  # error while adding quiz
+            else:
+                return 401 #error posting job
+   
+            
     finally:
         cur.close()
         conn.close()
