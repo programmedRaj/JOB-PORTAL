@@ -41,7 +41,7 @@ import admin_api as ad_api
 import no_auth_apis as no_auth
 import courses as courses
 import recommendation as recommend
-import resumeocr as rocr
+# import resumeocr as rocr
 CORS(app)
 
 
