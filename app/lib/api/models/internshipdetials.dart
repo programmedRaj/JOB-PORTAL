@@ -12,6 +12,7 @@ class InternshipDetails {
   final String datetimeinterview;
   final int isonlinetest;
   final String posnames;
+  final String umeet;
   InternshipDetails(
       {this.jobid,
       this.postedon,
@@ -25,5 +26,6 @@ class InternshipDetails {
       this.interviewloc,
       this.datetimeinterview,
       this.isonlinetest,
-      this.posnames});
+      this.posnames,
+      this.umeet});
 }

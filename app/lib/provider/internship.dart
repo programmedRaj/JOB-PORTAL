@@ -24,8 +24,10 @@ class InternshipDetialsProvider with ChangeNotifier {
     final String datetimeinterview,
     final int isonlinetest,
     final String posnames,
+    final String umeet,
   }) {
     internship.add(InternshipDetails(
+        umeet: umeet,
         jobid: jobid,
         postedon: postedon,
         description: description,
