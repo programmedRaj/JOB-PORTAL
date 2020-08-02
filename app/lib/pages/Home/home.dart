@@ -79,11 +79,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   // void initState() {
   //   super.initState();
   //   var initializationSettingsAndroid =
@@ -94,17 +89,16 @@ class _HomeState extends State<Home> {
 
   //   flutterLocalNotificationsPlugin.initialize(initSetttings,
   //       onSelectNotification: onSelectNotification);
-  //   showNotification();
   // }
 
-  // // ignore: missing_return
-  // Future onSelectNotification(String payload) {
-  //   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-  //     return NewScreen(
-  //       payload: payload,
-  //     );
-  //   }));
-  // }
+  // ignore: missing_return
+  Future onSelectNotification(String payload) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return NewScreen(
+        payload: payload,
+      );
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,11 +136,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {
-                // showMessage();
-              }),
+          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
           IconButton(
               icon: Icon(isDark ? Icons.wb_sunny : Icons.brightness_2),
               onPressed: () {
@@ -283,33 +273,34 @@ class _HomeState extends State<Home> {
     );
   }
 
-//   Future<void> cancelNotification() async {
-//     await flutterLocalNotificationsPlugin.cancel(0);
-//   }
+  // Future<void> cancelNotification() async {
+  //   await flutterLocalNotificationsPlugin.cancel(0);
+  // }
 
-//   showNotification() async {
-//     var android = new AndroidNotificationDetails(
-//         'id', 'channel ', 'description',
-//         priority: Priority.High, importance: Importance.Max);
-//     var iOS = new IOSNotificationDetails();
-//     var platform = new NotificationDetails(android, iOS);
-//     await flutterLocalNotificationsPlugin.show(
-//         0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
-//         payload: 'Welcome to the Local Notification demo ');
-//   }
+  // showNotification() async {
+  //   var android = new AndroidNotificationDetails(
+  //       'id', 'channel ', 'description',
+  //       priority: Priority.High, importance: Importance.Max);
+  //   var iOS = new IOSNotificationDetails();
+  //   var platform = new NotificationDetails(android, iOS);
+  //   await flutterLocalNotificationsPlugin.show(
+  //       0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
+  //       payload: 'Welcome to the Local Notification demo ');
+  // }
 }
 
-class SecondScreen extends StatelessWidget {
-  String title;
-  String message;
+class NewScreen extends StatelessWidget {
+  String payload;
 
-  SecondScreen({this.title, this.message});
+  NewScreen({
+    @required this.payload,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(payload),
       ),
     );
   }
