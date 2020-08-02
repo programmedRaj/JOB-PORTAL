@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import QuizForm from './QuizForm'
 
 import { AuthContext } from '../../context/authContext/authContext'
 import { JobContext } from '../../context/jobContext/jobContext'
@@ -62,6 +63,13 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 		interview_location: '',
 		is_onlinetest: ''
 	})
+
+	const [quizOpen, setQuizOpen] = useState(false)
+	const [questions, setQuestions] = useState([])
+
+	const handleQuizOpen = () => {
+		setQuizOpen(true)
+	}
 
 	const handleAddJob = () => {
 		addJob(authToken, jobDetails).then((res) => {
@@ -269,38 +277,62 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 							</FormControl>
 						</Grid>
 					</Grid>
-					<Box mt={3} align='right'>
-						{totalJobs > 1 ? (
-							<Button
-								style={{ marginRight: '10px' }}
-								color='primary'
-								onClick={prevJob}
-								variant='contained'
-							>
-								<ChevronLeftIcon />
-							</Button>
-						) : null}
+					<Box display='flex' justifyContent='space-between'>
+						<Box mt={3} display='inline-block'>
+							{jobDetails.is_onlinetest === '1' ? (
+								<Button
+									onClick={handleQuizOpen}
+									color='primary'
+									variant='contained'
+								>
+									Add Questions
+								</Button>
+							) : (
+								<span />
+							)}
+						</Box>
+						<Box mt={3} display='inline-block'>
+							{totalJobs > 1 ? (
+								<Button
+									style={{ marginRight: '10px' }}
+									color='primary'
+									onClick={prevJob}
+									variant='contained'
+								>
+									<ChevronLeftIcon />
+								</Button>
+							) : null}
 
-						<Button
-							color='secondary'
-							onClick={handleAddJob}
-							variant='contained'
-						>
-							{t('Add Job')}
-						</Button>
-						{totalJobs > 1 ? (
 							<Button
-								style={{ marginLeft: '10px' }}
-								color='primary'
-								onClick={nextJob}
+								color='secondary'
+								onClick={handleAddJob}
 								variant='contained'
+								disabled={
+									jobDetails.is_onlinetest === '1' && questions.length === 0
+								}
 							>
-								<ChevronRightIcon />
+								{t('Add Job')}
 							</Button>
-						) : null}
+							{totalJobs > 1 ? (
+								<Button
+									style={{ marginLeft: '10px' }}
+									color='primary'
+									onClick={nextJob}
+									variant='contained'
+								>
+									<ChevronRightIcon />
+								</Button>
+							) : null}
+						</Box>
 					</Box>
 				</Container>
 			</Paper>
+			<QuizForm
+				quizOpen={quizOpen}
+				setQuizOpen={setQuizOpen}
+				questions={questions}
+				setQuestions={setQuestions}
+			/>
 		</>
 	)
 }

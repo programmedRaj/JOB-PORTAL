@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
 
 import Slider from 'react-slick'
 
@@ -27,7 +28,6 @@ import 'slick-carousel/slick/slick-theme.css'
 import './overwrite.css'
 
 import { getStatus, setDBStatus, setDBMeetid } from './functions'
-import { TextField } from '@material-ui/core'
 
 const formatSkill = (obj) => {
 	let ret = []
