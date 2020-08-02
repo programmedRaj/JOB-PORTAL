@@ -80,7 +80,7 @@ def enroll_jobs(naam):
     already = cur.fetchall()
     try:
         if len(records) > 0:
-            if len(already) == 0:
+            if len(already) == 0 and request.json['score'] > 0:
                 cur.execute(
                     "INSERT INTO enrolled_jobs (job_id,user_id,question,status) VALUES ('"+str(request.json['job_id'])+"',"+str(naam['user_id'])+",'"+str(request.json['answer'])+"','submitted');")
                 conn.commit()
