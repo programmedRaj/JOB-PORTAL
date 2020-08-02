@@ -6,8 +6,10 @@ class AppliedJobProvider with ChangeNotifier {
   List<AJ> jobs = [];
   List<AJ> get job => jobs;
 
-  void addj({String jobid, String appliedon, String status}) {
-    jobs.add(AJ(appliedon: appliedon, jobid: jobid, status: status));
+  void addj({String jobid, String appliedon, String status, String meetid}) {
+    print(meetid);
+    jobs.add(
+        AJ(appliedon: appliedon, jobid: jobid, status: status, meetid: meetid));
     notifyListeners();
   }
 

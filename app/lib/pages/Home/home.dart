@@ -57,19 +57,21 @@ class _HomeState extends State<Home> {
     job.remove();
     for (int i = 0; i < n.length; i++) {
       job.add(
-          jobid: n[i]['job_id'],
-          closingdate: n[i]['closing_date'],
-          datetimeinterview: n[i]['date_time_interview'],
-          description: n[i]['description'],
-          extrainfo: n[i]['extra_info'],
-          interviewloc: n[i]['interveiw_loc'],
-          stipend: n[i]['stipend'],
-          interviewmode: n[i]['interview_mode'],
-          nopositions: n[i]['no_postions'],
-          postedon: n[i]['posted_on'],
-          qualifications: n[i]['qualification'],
-          posnames: n[i]['pos_names'],
-          isonlinetest: n[i]['is_online_test']);
+        jobid: n[i]['job_id'],
+        closingdate: n[i]['closing_date'],
+        datetimeinterview: n[i]['date_time_interview'],
+        description: n[i]['description'],
+        extrainfo: n[i]['extra_info'],
+        interviewloc: n[i]['interveiw_loc'],
+        stipend: n[i]['stipend'],
+        interviewmode: n[i]['interview_mode'],
+        nopositions: n[i]['no_postions'],
+        postedon: n[i]['posted_on'],
+        qualifications: n[i]['qualification'],
+        posnames: n[i]['pos_names'],
+        isonlinetest: n[i]['is_online_test'],
+        umeet: n[i]['meetid'],
+      );
     }
   }
 

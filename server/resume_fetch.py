@@ -79,7 +79,7 @@ def fetch_skills(naam):
             skills.append(k['title'])
             level.append(r['level'])
         skill_d['skill']= skills
-        skill_d['levelOFskill']= level   # yeh values jaarha hai but o/p reqd ... {"skill":[sdds,sdsd.sdsd]} ruk phone karta hai  8080923621 pr kr k
+        skill_d['levelOFskill']= level
         records=skill_d
         return records
     return 'empty'
