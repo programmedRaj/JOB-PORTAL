@@ -42,7 +42,7 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 	const { t } = useTranslation()
 
 	const { authToken } = useContext(AuthContext)
-	const [status, setStatus] = useState('')
+	const [status, setStatus] = useState({})
 
 	const personal = details.personal_details
 	const skills = details.skills_list ? formatSkill(details.skills_list) : []
@@ -60,12 +60,17 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 	}
 
 	useEffect(() => {
-		getStatus(authToken, userId, jobId).then((res) => setStatus(res))
+		getStatus(authToken, userId, jobId).then((res) => {
+			setStatus(res)
+		})
 	}, [])
+	console.log(status)
 
 	const handleStatusChange = (e) => {
-		setDBStatus(authToken, userId, jobId, e.target.value).then((res) =>
-			res ? setStatus(e.target.value) : console.log('setStatusError')
+		setDBStatus(authToken, e.target.name, jobId, e.target.value).then((res) =>
+			res
+				? setStatus({ ...status, id: e.target.name, status: e.target.value })
+				: console.log('setStatusError')
 		)
 	}
 
@@ -249,18 +254,25 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 					</Slider>
 					<Divider />
 					<Box style={{ textAlign: 'center' }} my={3}>
-						<Typography gutterBottom>Application Status</Typography>
-						<Select
-							variant='outlined'
-							margin='dense'
-							value={status}
-							onChange={handleStatusChange}
-						>
-							<MenuItem value='applied'>Applied</MenuItem>
-							<MenuItem value='selected'>Selected</MenuItem>
-							<MenuItem value='underreview'>Under Review</MenuItem>
-							<MenuItem value='notselected'>Not Selected</MenuItem>
-						</Select>
+						{status && status.status && status.id ? (
+							<>
+								<Typography gutterBottom>Application Status</Typography>
+								<Select
+									variant='outlined'
+									margin='dense'
+									value={status && status.status && status.status}
+									name={status && status.id && status.id.toString()}
+									onChange={handleStatusChange}
+								>
+									<MenuItem value='applied'>Applied</MenuItem>
+									<MenuItem value='selected'>Selected</MenuItem>
+									<MenuItem value='underreview'>Under Review</MenuItem>
+									<MenuItem value='notselected'>Not Selected</MenuItem>
+								</Select>
+							</>
+						) : (
+							<span />
+						)}
 					</Box>
 				</Container>
 			</DialogContent>

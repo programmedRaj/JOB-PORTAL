@@ -16,17 +16,17 @@ export const getStatus = (token, userId, jobId) => {
 
 	return fetch(config.server + '/update-status', requestOptions)
 		.then((response) => response.json())
-		.then((res) => res.status)
+		.then((res) => res)
 }
 
-export const setDBStatus = (token, userId, jobId, status) => {
+export const setDBStatus = (token, primKey, jobId, status) => {
 	let myHeaders = new Headers()
 	myHeaders.append('Authorization', token)
 	myHeaders.append('Content-Type', 'application/json')
 
 	let raw = JSON.stringify({
 		mode: 'update',
-		user_id: userId,
+		prim_key: primKey,
 		job_id: jobId,
 		ustatus: status
 	})
