@@ -41,6 +41,7 @@ import admin_api as ad_api
 import no_auth_apis as no_auth
 import courses as courses
 import recommendation as recommend
+import resumeocr as rocr
 CORS(app)
 
 
@@ -458,7 +459,32 @@ def recommendations():
     elif (request.json['which'] == "upgradeskill"):
         response = recommend.mainMain(skill_list, level_list)
         return response
-        # ADMIN SIDE REQUESTS.
+
+
+@app.route('/resume-ocr', methods=['POST'])
+@check_for_token
+def resume_ocr():
+    if 'file' not in request.files:
+        resp = jsonify({'message': 'No file part in the request'})
+        resp.status_code = 400
+        return resp
+    file = request.files['file']
+    if file.filename == '':
+        resp = jsonify({'message': 'No file selected for uploading'})
+        resp.status_code = 400
+        return resp
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        response = rocr.de_bhai_pdf(filename)
+        return jsonify({"op": response})
+
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = set(['pdf'])
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    # ADMIN SIDE REQUESTS.
 
 
 def check_for_token_admin(param):
