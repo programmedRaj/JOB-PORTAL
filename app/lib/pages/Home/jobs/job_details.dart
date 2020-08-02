@@ -67,6 +67,7 @@ class _JobDetialsState extends State<JobDetials> {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) => EditApply(
                       jobid: widget.jobid,
+                      isDark: isDarkk,
                     )));
           }),
       body: SingleChildScrollView(

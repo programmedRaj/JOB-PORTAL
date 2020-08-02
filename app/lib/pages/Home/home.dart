@@ -33,6 +33,10 @@ class _HomeState extends State<Home> {
   bool listen = false;
   BaseUrl baseUrl = BaseUrl();
   String fname;
+
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+
   // ignore: missing_return
   Future<Internships> getjobs(String title, String start, String end,
       String location, InternshipDetialsProvider job) async {
@@ -80,6 +84,28 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  // void initState() {
+  //   super.initState();
+  //   var initializationSettingsAndroid =
+  //       AndroidInitializationSettings('flutter_devs');
+  //   var initializationSettingsIOs = IOSInitializationSettings();
+  //   var initSetttings = InitializationSettings(
+  //       initializationSettingsAndroid, initializationSettingsIOs);
+
+  //   flutterLocalNotificationsPlugin.initialize(initSetttings,
+  //       onSelectNotification: onSelectNotification);
+  //   showNotification();
+  // }
+
+  // // ignore: missing_return
+  // Future onSelectNotification(String payload) {
+  //   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+  //     return NewScreen(
+  //       payload: payload,
+  //     );
+  //   }));
+  // }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = DynamicColorTheme.of(context).isDark;
@@ -117,14 +143,10 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           IconButton(
-              icon: Icon(
-                Icons.search,
-                color: isDarkk
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).accentColor,
-              ),
-              onPressed: () {}),
-          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                // showMessage();
+              }),
           IconButton(
               icon: Icon(isDark ? Icons.wb_sunny : Icons.brightness_2),
               onPressed: () {
@@ -258,6 +280,37 @@ class _HomeState extends State<Home> {
           ),
         ],
       )),
+    );
+  }
+
+//   Future<void> cancelNotification() async {
+//     await flutterLocalNotificationsPlugin.cancel(0);
+//   }
+
+//   showNotification() async {
+//     var android = new AndroidNotificationDetails(
+//         'id', 'channel ', 'description',
+//         priority: Priority.High, importance: Importance.Max);
+//     var iOS = new IOSNotificationDetails();
+//     var platform = new NotificationDetails(android, iOS);
+//     await flutterLocalNotificationsPlugin.show(
+//         0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
+//         payload: 'Welcome to the Local Notification demo ');
+//   }
+}
+
+class SecondScreen extends StatelessWidget {
+  String title;
+  String message;
+
+  SecondScreen({this.title, this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
     );
   }
 }

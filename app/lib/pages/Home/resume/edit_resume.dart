@@ -18,7 +18,7 @@ import 'section.dart/trainingsec.dart';
 
 class Editresume extends StatefulWidget {
   final bool isDark;
-  Editresume(this.isDark);
+  Editresume({this.isDark});
   @override
   _EditresumeState createState() => _EditresumeState();
 }
