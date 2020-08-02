@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _buildTheme(Color accentColor, bool isDark) {
-    final ThemeData base = isDark ? ThemeData.dark() : ThemeData.light();
+    final ThemeData base = ThemeData.dark();
 
     return base.copyWith(
         iconTheme: IconThemeData(color: isDark ? myColor[50] : myColor[100]),

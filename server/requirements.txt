@@ -11,4 +11,4 @@ numpy
 cython
 datefinder
 find-job-titles
-pyresparserpip
+pyresparser

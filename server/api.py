@@ -759,6 +759,9 @@ def ustatus():
     if(request.json['mode'] == 'update'):
         resp = ad_api.ustatus()
         return resp
+    if(request.json['mode'] == 'meetid'):
+        resp = ad_api.umeetid()
+        return resp
 
 
 @app.route('/users-count',  methods=['GET'])
