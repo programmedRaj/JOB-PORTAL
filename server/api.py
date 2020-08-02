@@ -484,6 +484,21 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = set(['pdf'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+@app.route('/quizy' ,methods=['POST'])
+def ques():
+    conn = mysql.connect()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute("Select * from quiz Where jobid = '" +
+                str(request.json['job_id'])+"';")
+    records = cur.fetchall()
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'qna':records})
+
+
+
     # ADMIN SIDE REQUESTS.
 
 
