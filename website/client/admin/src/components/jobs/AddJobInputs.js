@@ -61,7 +61,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 		extra_info: job ? job.Links : '',
 		interview_mode: '',
 		interview_location: '',
-		is_onlinetest: ''
+		is_onlinetest: 0
 	})
 
 	const [quizOpen, setQuizOpen] = useState(false)
@@ -72,7 +72,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 	}
 
 	const handleAddJob = () => {
-		addJob(authToken, jobDetails).then((res) => {
+		addJob(authToken, jobDetails, questions).then((res) => {
 			if (res) {
 				showSnack('New job added')
 			} else {
@@ -195,12 +195,12 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 								fullWidth
 								disablePast
 								value={jobDetails.closing_date}
-								onChange={(e) =>
+								onChange={(e) => {
 									setJobDetails({
 										...jobDetails,
-										closing_date: e
+										closing_date: e._i
 									})
-								}
+								}}
 							/>
 						</Grid>
 						<Grid item sm={6} xs={12}>
@@ -215,7 +215,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 								onChange={(e) =>
 									setJobDetails({
 										...jobDetails,
-										datetime_interview: e
+										datetime_interview: e._i
 									})
 								}
 							/>
@@ -271,15 +271,15 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 										})
 									}
 								>
-									<MenuItem value='1'>Yes</MenuItem>
-									<MenuItem value='0'>No</MenuItem>
+									<MenuItem value={1}>Yes</MenuItem>
+									<MenuItem value={0}>No</MenuItem>
 								</Select>
 							</FormControl>
 						</Grid>
 					</Grid>
 					<Box display='flex' justifyContent='space-between'>
 						<Box mt={3} display='inline-block'>
-							{jobDetails.is_onlinetest === '1' ? (
+							{jobDetails.is_onlinetest === 1 ? (
 								<Button
 									onClick={handleQuizOpen}
 									color='primary'
@@ -308,7 +308,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 								onClick={handleAddJob}
 								variant='contained'
 								disabled={
-									jobDetails.is_onlinetest === '1' && questions.length === 0
+									jobDetails.is_onlinetest === 1 && questions.length === 0
 								}
 							>
 								{t('Add Job')}

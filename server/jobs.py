@@ -18,9 +18,10 @@ def get_random_alphanumeric_string(length):
     result_str = ''.join((random.choice(letters_and_digits)
                           for i in range(length)))
     return result_str
-jobidd=get_random_alphanumeric_string(8)
+
 
 def create_job(naam):
+    jobidd = get_random_alphanumeric_string(8)
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
     cur1 = conn.cursor(pymysql.cursors.DictCursor)
@@ -36,28 +37,26 @@ def create_job(naam):
                         "','"+str(request.json['interview_mode'])+"','" + str(request.json['interview_location']) + "','"+str(date_int) + "','"+str(request.json['is_onlinetest']) + "');")
             conn.commit()
             if cur:
-                return 200 #success job
-            return 401 #error posting job
-
+                return 200  # success job
+            return 401  # error posting job
 
         if request.json['is_onlinetest'] == 0:
-            resp=only_job()
-            #conn.commit()  uncomment krna jabhi 37th line ko comment krega..
+            resp = only_job()
+            # conn.commit()  uncomment krna jabhi 37th line ko comment krega..
             return resp
 
-
         elif request.json['is_onlinetest'] == 1:
-            responnses=only_job()
-            if responnses == 200 :
-                cur1.execute("INSERT INTO quiz(jobid,questions) VALUES('" + str(jobidd)+"','" +str(request.json['qnalist']) + "');")
+            responnses = only_job()
+            if responnses == 200:
+                cur1.execute("INSERT INTO quiz(jobid,questions) VALUES('" +
+                             str(jobidd)+"','" + str(request.json['qnalist']) + "');")
                 conn.commit()
                 if cur1:
-                    return 2000 # success both
+                    return 2000  # success both
                 return 400  # error while adding quiz
             else:
-                return 401 #error posting job
-   
-            
+                return 401  # error posting job
+
     finally:
         cur.close()
         conn.close()
@@ -115,5 +114,3 @@ def update_job(naam):
     finally:
         cur.close()
         conn.close()
-
-

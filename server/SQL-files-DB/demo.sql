@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2020 at 02:28 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.1.14
+-- Generation Time: Aug 02, 2020 at 09:13 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `username` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `create_time` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -195,19 +194,20 @@ CREATE TABLE `enrolled_jobs` (
   `id` int(11) NOT NULL,
   `job_id` varchar(10) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `applied_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `applied_on` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `question` varchar(2000) NOT NULL,
-  `status` varchar(45) DEFAULT NULL
+  `status` varchar(45) NOT NULL,
+  `meetid` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `enrolled_jobs`
 --
 
-INSERT INTO `enrolled_jobs` (`id`, `job_id`, `user_id`, `applied_on`, `question`, `status`) VALUES
-(1, 'cscordwx', 1, '2020-08-01 17:28:07', 'sdsd', 'applied'),
-(2, 'cscordwx', 2, '2020-08-01 01:12:10', 'sdsd', NULL),
-(3, 'cscorewb', 2, '2020-08-01 01:12:10', 'sdsdsd', NULL);
+INSERT INTO `enrolled_jobs` (`id`, `job_id`, `user_id`, `applied_on`, `question`, `status`, `meetid`) VALUES
+(1, 'cscordwx', 1, '2020-08-02 16:03:05', 'sdsd', 'underreview', 'kkkkk'),
+(2, 'cscordwx', 2, '2020-08-02 12:38:23', 'sdsd', 'applied', NULL),
+(3, 'cscorewb', 2, '2020-08-02 13:25:16', 'sdsdsd', 'applied', NULL);
 
 -- --------------------------------------------------------
 
@@ -217,7 +217,7 @@ INSERT INTO `enrolled_jobs` (`id`, `job_id`, `user_id`, `applied_on`, `question`
 
 CREATE TABLE `job` (
   `job_id` varchar(10) NOT NULL,
-  `posted_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `posted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `description` varchar(5000) NOT NULL,
   `closing_date` datetime NOT NULL,
   `pos_names` varchar(1000) NOT NULL,
@@ -237,11 +237,11 @@ CREATE TABLE `job` (
 --
 
 INSERT INTO `job` (`job_id`, `posted_on`, `description`, `closing_date`, `pos_names`, `no_postions`, `stipend`, `qualification`, `extra_info`, `interview_mode`, `interveiw_loc`, `date_time_interview`, `is_online_test`, `posted_by`) VALUES
+('9E6QhGFg', '2020-08-02 17:02:07', '', '2020-08-02 22:30:48', '', '0', '0', '', '', '', '', '2020-08-02 22:30:48', 0, 'raj'),
 ('ascorewx', '2020-07-29 04:58:29', 'The construction sector includes the construction of commercial, industrial, and residential buildings and engineering projects like roads, bridges, and utility systems. Construction includes both new construction and remodeling, additions, maintenance, and repairs.', '2020-08-10 00:00:00', 'Civil Site Engineer . Electrical Eng. Machinical Eng. Maintenance Dep Roorkee', '4', '229999', 'Bachelor of Arts (B.A),Bachelor of Business Administration (B.B.A),Bachelor Of Computer Application (B.C.A),Bachelor Of Technology (B.Tech/B.E),Bachelor of Science (B.Sc),Company SecretaryDiplomaMasters in Arts (M.A),Masters in Technology (M.Tech/M.E/M.Sc)', 'extras', 'Offline', 'Mumbai', '2020-08-12 00:00:00', 1, 'Vikas'),
 ('bkceswex', '2020-07-29 04:58:29', 'Ã¢â‚¬Â¢ Responsible for selling Rainwear Products to FMCG, Pharma, Agro Industries.\r\nÃ¢â‚¬Â¢ Coordinate with partners to create and execute business plans to meet sales goals.\r\nÃ¢â‚¬Â¢ Analyze market trends and accordingly develop sales plans.\r\nÃ¢â‚¬Â¢ Evaluate partner sales performance and recommend improvements.\r\nÃ¢â‚¬Â¢ Educate partners about product portfolio.\r\nÃ¢â‚¬Â¢ Address partner related issues, sales conflicts and pricing issues in a timely manner.\r\nÃ¢â‚¬Â¢ Develop positive working relationship with partners to build business.\r\nÃ¢â‚¬Â¢ Stay current with latest developments in marketplace and competitor activities.\r\nÃ¢â‚¬Â¢ Communicate up-to-date information about new products and enhancements to partners.\r\nÃ¢â‚¬Â¢ Assist in partner marketing activities such as tradeshows, campaigns and other promotional activities.\r\nÃ¢â‚¬Â¢ Identify, recruit and on-board new channel partners within assigned territory.\r\nAchieves assigned sales quota in designated partner accounts.', '2020-09-12 00:00:00', 'BDM - Corporate sale', '5', '1000000', 'Master OF Business Administration (M.B.A)', 'extras', 'offline', 'Mumbai ', '2020-09-11 00:00:00', 0, 'Vikas'),
 ('bkcorewx', '2020-07-29 04:58:29', 'Male candidates with horticulture qualification ( B Sc or M Sc) with 2-4 years of exp in landscaping, vegetables, fruits and ,multicrops\r\nShould be conversant with organic farming right from seeding till harvesting .\r\nShould be a team worker with the ability to give helping hand to Farm manager\r\nShould be conversant /knowledgeable in pesticides/fertilizers .\r\nShould be able to communicate to down the line workers\r\nShould be able to handle the inputs and outputs with utmost to achieve organization objectives.', '2020-07-30 00:00:00', 'Horticulturist', '6', '900000', 'Horticulture qualification ( B Sc or M Sc) ', 'extras', 'Online', 'Delhi', '2020-07-31 00:00:00', 1, 'Vikas'),
 ('bscorewx', '2020-07-29 04:58:29', 'Ã‚Â Job opening for the internal medicine at reputedÃ‚Â  Multi-Specialist hospital in Roorkee.', '2020-08-11 00:00:00', 'Internal Medicine Physician Assistant', '5', '3000000', 'MBBS ,Doctor of Medicine (M.D/M.S)', 'extras', 'Offline', 'Roorkee', '2020-08-13 00:00:00', 1, 'Vikas'),
-('cscoaewx', '2020-07-29 04:58:29', 'Min 1+ years of experience in sales of products like Steel, Cement, PVC ,Construction,Real Estate, Paints, with a reputed company will be entertained and is must and should Freshers will not entertained\n\nMale Candidates will be Proffered\nHaving own conveyance like motorbike or scooter\n\nSearching for new clients who could benefit from our products in a designated region. \n\nEstablishing new, and maintaining existing, relationships with customers. \n\nCold calling & Lead generation. \n\nManaging and interpreting customer requirements. \n\nProvide alternative solutions as required to meet unique customer needs. \n\nOffering after-sales support services. \n\nMeeting regular sales targets. \n\nWilling to Travel extensively.\n\nPerks and Benefits \n\nEPF, ESIC, Annual Bonus ,Incentive.', '2020-07-31 00:00:00', 'Sales Executive /Manager', '7', '450000 ', 'Any Qualification(PUC OR DEGREE) with experience from Steel/Cement/Construction /Real Estate Metal Fabrication Industry will be preferable', 'extras', 'Online', 'Bengaluru ', '2020-08-02 00:00:00', 1, 'Raj'),
 ('cscoloop', '2020-07-29 04:58:29', 'We are looking for candidate in our Industrial Department for Business Development Manager.\r\nfollowing are the criteria:\r\nPerson should have Minimum 6 Months Experience\r\nExposure of industrial product developments( sales & technical) with repute paints company like knp ,Asian paints ,BASF ,PPG ,SABOO,ESSDEE, ETC\r\nDealing with oem\'s product line like pu , plastic coating ,TSA ,Stoving range .to develop new segments /oems\r\nPerson should have technical qualification from HBTI or from any repute paint technology msc . ', '2020-08-11 00:00:00', 'Business Development Manager-(Sales & Technical)', '9', '400000', 'Bachelor Of Technology ,(B.Tech/B.E)Diploma', 'extras', 'offline', 'Ahmedabad ', '2020-07-07 00:00:00', 0, 'Vikas'),
 ('cscopewx', '2020-07-29 04:58:29', 'Good Communication Skill\nHindi & English', '2020-08-09 00:00:00', 'Ground staff & Air ticketing', '4', '819999', '10+2 & Graduate FresherÃ¢â‚¬â„¢s', 'extras', 'Offline', 'Haldwani', '2020-08-11 00:00:00', 1, 'Vikas'),
 ('cscorbwx', '2020-07-29 04:58:29', 'The construction sector includes the construction of commercial, industrial, and residential buildings and engineering projects like roads, bridges, and utility systems. Construction includes both new construction and remodeling, additions, maintenance, and repairs.', '2020-08-01 00:00:00', 'civil Site Engineer. Electrical Eng. Machinical Eng. Maintenance Haridwar', '12', '229999', 'Bachelor of Arts (B.A),Bachelor of Business Administration (B.B.A),Bachelor Of Computer Application (B.C.A),Bachelor of Commerce (B.Com),Bachelor Of Technology (B.Tech/B.E),Bachelor of Science (B.Sc),12th Class (XII),DiplomaMasters in Technology (M.Tech/M.E/M.Sc)', 'extras', 'Online', 'Dehradun', '2020-08-03 00:00:00', 1, 'Raj'),
@@ -262,7 +262,8 @@ INSERT INTO `job` (`job_id`, `posted_on`, `description`, `closing_date`, `pos_na
 ('kkkkrewx', '2020-07-27 23:53:09', 'You will be responsible for producing graphically- rich content such as presentations , documents , brochures , social media banners , videos , and event materials.\r\nAny Bachelors Degree. Preference to Bachelors of Fine Arts.\r\nMinimum of 5 years\r\nPortfolio of designs Modern clean minimalist aesthetic 8+ years of experience with at least two of those years working in a global software house Ability to visually express concepts; business attributes PowerPoint guru; InDesign maestro Deep understanding of the principles of typography Ability to create and maintain brand guidelines Maintains brand consistency across all deliverables Broad experience with industry- standard tools such as: Photoshop , Illustrator , Adobe XD Demonstrated experience creating product demonstration videos , illustrations , and infographics Degree in design or related discipline\r\nA Behance profile\r\nWorked for international software house for at least 2 years Video creation and video animation HTML/ CSS/ Bootstrap UI/ UX experience Own and define brand guidelines for an international software company', '2020-08-11 00:00:00', 'Graphic Designer', '8', '80000', 'Bachelors/Degree', 'extras', 'offline', 'Mumbai', '2020-07-31 00:00:00', 0, 'Raj'),
 ('lklkrewx', '2020-07-27 23:53:09', 'Should be able to communicate to down the line workers\r\nShould be able to handle the inputs and outputs with utmost to achieve organization objectives.', '2020-07-25 00:00:00', 'Horticulturist', '7', '1000000', 'Graduate in Mass Communication', 'extras', 'Online', 'Delhi', '2020-07-23 00:00:00', 1, 'Raj'),
 ('lscorewx', '2020-07-29 05:00:49', 'Handle the bank branch which is provided by the manager and generate leads\nMaintaining and building fine relationships so as to get business month on month.\nCoordinating and synchronizing with BM\'s and Regional Heads so as to increase the business.\nManaging and supporting Relationship Managers for sales calls, Promotion support & training-development.\nPlanning, strategizing, supervising big events so as to create more clients for respective channels and also generating business thereby.\nEffective presentation to masses and classes being a part of the job carried out well.\nLooking out for prospective corporate agents and appointing them so as to increase and achieve targets comfortably.', '2020-08-13 00:00:00', 'Client of HR Remedy India - Banca Vertical', '2', '350000', 'B.com', 'extras', 'Offline', 'Chennai', '2020-08-15 00:00:00', 1, 'Vikas'),
-('mklkrewx', '2020-07-29 05:00:49', 'Candidate should have Degree in Law/ Masters in social science, paralegal training or knowledge of laws, At least 3 yrs of experience.\r\n', '2020-09-23 00:00:00', 'Consultant Ã¢â‚¬â€œ Paralegal', '8', '220000', 'Bachelors of Law (B.L/L.L.B),Masters in Technology (M.Tech/M.E/M.Sc)', 'extras', 'offline', 'Chandigarh', '2020-09-17 00:00:00', 1, 'Vikas');
+('mklkrewx', '2020-07-29 05:00:49', 'Candidate should have Degree in Law/ Masters in social science, paralegal training or knowledge of laws, At least 3 yrs of experience.\r\n', '2020-09-23 00:00:00', 'Consultant Ã¢â‚¬â€œ Paralegal', '8', '220000', 'Bachelors of Law (B.L/L.L.B),Masters in Technology (M.Tech/M.E/M.Sc)', 'extras', 'offline', 'Chandigarh', '2020-09-17 00:00:00', 1, 'Vikas'),
+('Mrs2yUiB', '2020-08-02 14:36:35', 'The Job Profile of Branch Post Master will include managing affairs of Branch Post Office, India Posts Payments Bank ( IPPB) and ensuring uninterrupted counter operation - during the - prescribed - working - hours - using the - handheld device/Smartphone/laptop supplied by the Department. The overall management of postal facilities, maintenance of records, upkeep of handheld device/laptop/equipment ensuring online transactions, and marketing of Postal, India Post Payments Bank services and procurement of business in the villages or Gram Panchayats within the jurisdiction of the Branch Post Office should rest on the shoulders of Branch Postmasters. However, the work performed for IPPB will not be included in calculation of TRCA, since the same is being done on incentive basis.Branch Postmaster will be the team leader of the Branch Post Office and overall responsibility of smooth and timely functioning of Post Office including mail conveyance and mail delivery. He/she might be assisted by Assistant Branch Post Master of the same Branch Post Office. BPM will be required to do combined duties of ABPMs as and when ordered. He will also be required to do marketing, organizing melas, business procurement and any other work assigned by IPO/ASPO/SPOs/SSPOs/SRM/SSRM and other Supervising authorities. In some of the Branch Post Offices, the BPM has to do all the work of BPM/ABPM. (ii) Name of Position: ASSISTANT BRANCH POSTMASTER (ABPM) Number of Positions: 18 Stipend: 12000 Description: The Job Profile of Assistant Branch Post Master will include all functions of sale of - stamps/stationery, conveyance and Delivery of mail at doorstep deposits/payments/other transactions under IPPB, assisting Branch Postmasters in counter duties using the handheld device/Smart phone supplied by the Department. However, the work performed for IPPB will not be included in calculation of TRCA, since the same is being done on incentive basis.He will also be required to do marketing, organizing melas, business procurement and any other work assigned by the Branch Postmaster', '2020-08-02 20:06:04', 'BRANCH POSTMASTER (BPM)', '8', '22000', 'Bahot', 'RECTT./GDS ONLINE/CYCLE-I/2020', 'online', 'Gharpe', '2020-08-02 20:06:04', 0, 'raj');
 
 -- --------------------------------------------------------
 
@@ -280,6 +281,24 @@ CREATE TABLE `online_test` (
   `option_4` varchar(1000) NOT NULL,
   `reqd_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz`
+--
+
+CREATE TABLE `quiz` (
+  `jobid` varchar(10) NOT NULL,
+  `questions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`questions`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `quiz`
+--
+
+INSERT INTO `quiz` (`jobid`, `questions`) VALUES
+('ascoreqx', '[{\"A\": {\"1\": \"37\", \"2\": \"7\", \"3\": \"17\", \"4\": \"25\", \"valid\": \"1\"}, \"Q\": \"dsddsdsd ? what say?\"}, {\"A\": {\"1\": \"37\", \"2\": \"7\", \"3\": \"17\", \"4\": \"25\", \"valid\": \"2\"}, \"Q\": \"dsddsdsd?\"}]');
 
 -- --------------------------------------------------------
 
@@ -831,7 +850,7 @@ ALTER TABLE `enrolled_courses`
 -- AUTO_INCREMENT for table `enrolled_jobs`
 --
 ALTER TABLE `enrolled_jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `resume_edu_details`
