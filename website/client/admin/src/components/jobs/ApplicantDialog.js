@@ -20,12 +20,13 @@ import Divider from '@material-ui/core/Divider'
 import Slider from 'react-slick'
 
 import { AuthContext } from '../../context/authContext/authContext'
+import { SnackContext } from '../../context/snackContext/snackContext'
 import { useTranslation } from 'react-i18next'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './overwrite.css'
 
-import { getStatus, setDBStatus } from './functions'
+import { getStatus, setDBStatus, setDBMeetid } from './functions'
 import { TextField } from '@material-ui/core'
 
 const formatSkill = (obj) => {
@@ -43,7 +44,9 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 	const { t } = useTranslation()
 
 	const { authToken } = useContext(AuthContext)
+	const { showSnack } = useContext(SnackContext)
 	const [status, setStatus] = useState({})
+	const [meetid, setMeetid] = useState('')
 
 	const personal = details.personal_details
 	const skills = details.skills_list ? formatSkill(details.skills_list) : []
@@ -71,7 +74,15 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 		setDBStatus(authToken, e.target.name, jobId, e.target.value).then((res) =>
 			res
 				? setStatus({ ...status, id: e.target.name, status: e.target.value })
-				: console.log('setStatusError')
+				: showSnack('Something went wrong')
+		)
+	}
+
+	const handleMeetid = () => {
+		setDBMeetid(authToken, status.id, meetid).then((res) =>
+			res
+				? showSnack('Meet ID sent to applicant')
+				: showSnack('Something went wrong')
 		)
 	}
 
@@ -257,6 +268,13 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 					<Box style={{ textAlign: 'center' }} my={3}>
 						{status && status.status && status.id ? (
 							<>
+								<Box my={2}>
+									<Typography variant='subtitle2'>
+										Why should we hire you?
+									</Typography>
+									<Typography variant='caption'>{status.question}</Typography>
+								</Box>
+								<Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 								<Typography gutterBottom>Application Status</Typography>
 								<Select
 									variant='outlined'
@@ -276,9 +294,13 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 											variant='outlined'
 											margin='dense'
 											label='Meet ID'
+											value={meetid}
+											onChange={(e) => setMeetid(e.target.value)}
 										/>
 										<div>
-											<Button color='secondary'>Send</Button>
+											<Button onClick={handleMeetid} color='secondary'>
+												Send
+											</Button>
 										</div>
 									</div>
 								) : (

@@ -45,3 +45,29 @@ export const setDBStatus = (token, primKey, jobId, status) => {
 			return false
 		})
 }
+
+export const setDBMeetid = (token, primKey, meetId) => {
+	let myHeaders = new Headers()
+	myHeaders.append('Authorization', token)
+	myHeaders.append('Content-Type', 'application/json')
+
+	let raw = JSON.stringify({
+		mode: 'meetid',
+		prim_key: primKey,
+		umeetid: meetId
+	})
+
+	let requestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	}
+
+	return fetch(config.server + '/update-status', requestOptions)
+		.then((response) => (response.status === 200 ? true : false))
+		.catch((err) => {
+			console.log(err)
+			return false
+		})
+}
