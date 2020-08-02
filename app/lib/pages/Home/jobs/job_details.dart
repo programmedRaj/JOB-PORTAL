@@ -74,7 +74,7 @@ class _JobDetialsState extends State<JobDetials> {
           children: [
             //column1
             Container(
-              height: height * 0.35,
+              height: height * 0.38,
               color: isDarkk
                   ? Theme.of(context).primaryColor
                   : Theme.of(context).disabledColor,
@@ -191,7 +191,6 @@ class _JobDetialsState extends State<JobDetials> {
             ),
             //column2
             Container(
-              margin: EdgeInsets.only(top: 10),
               height: height * 1.5,
               width: width,
               color: isDarkk
