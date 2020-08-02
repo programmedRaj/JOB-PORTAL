@@ -4,9 +4,11 @@ Werkzeug
 pymysql
 pyjwt
 flask-cors
-cv2
 jsonpickle
-os
 pdf2image
 pytesseract
 numpy
+cython
+datefinder
+find-job-titles
+pyresparserpip
