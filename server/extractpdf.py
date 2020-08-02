@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import cv2
@@ -7,7 +8,7 @@ from pdf2image.exceptions import PDFInfoNotInstalledError, PDFPageCountError, PD
 
 def yoohoo(filename):
     a = []
-    UPLOAD_FOLDER = 'D:/_dev/jobSetu/server/uploads/'
+    UPLOAD_FOLDER = os.getcwd()+'/uploads/'
     urll = UPLOAD_FOLDER+filename
     from pdf2image import convert_from_path
   # iske andar pdf kuch bhi kar k aajana chaiye

@@ -117,10 +117,10 @@ const Dashboard = () => {
 				<Typography gutterBottom variant='body1'>
 					{t('Jobs added by you')}
 				</Typography>
-				<Grid container spacing={3}>
+				<Grid container spacing={5}>
 					{postedJobs && postedJobs.length > 0 ? (
 						postedJobs.map((job, index) => (
-							<Grid key={index} item xs={12} sm={6} md={4}>
+							<Grid key={index} item xs={12} sm={6} md={6}>
 								<JobCard job={job} />
 							</Grid>
 						))

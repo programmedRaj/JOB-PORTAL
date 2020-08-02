@@ -27,6 +27,17 @@ import './overwrite.css'
 
 import { getStatus, setDBStatus } from './functions'
 
+const formatSkill = (obj) => {
+	let ret = []
+	for (let i = 0; i <= Object.keys(obj).length; i++) {
+		ret.push({
+			skill: Object.keys(obj)[i],
+			level: Object.values(obj)[i]
+		})
+	}
+	return ret
+}
+
 const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 	const { t } = useTranslation()
 
@@ -34,7 +45,7 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 	const [status, setStatus] = useState('')
 
 	const personal = details.personal_details
-	const skills = details.skills_list
+	const skills = details.skills_list ? formatSkill(details.skills_list) : []
 	const education = details.edu_details
 	const experience = details.job_details
 	const projects = details.projects_list
@@ -115,38 +126,15 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 							</Typography>
 							<Table style={{ marginTop: '1rem', background: '#fff' }}>
 								<TableBody>
-									<TableRow>
-										<TableCell align='left' component='th' scope='row'>
-											Email
-										</TableCell>
-										<TableCell align='right'>
-											{personal && personal.email}
-										</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell align='left' component='th' scope='row'>
-											Phone
-										</TableCell>
-										<TableCell align='right'>
-											{personal && personal.phone_no}
-										</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell align='left' component='th' scope='row'>
-											Location
-										</TableCell>
-										<TableCell align='right'>
-											{personal && personal.location}
-										</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell align='left' component='th' scope='row'>
-											Additional edu_details
-										</TableCell>
-										<TableCell align='right'>
-											{personal && personal.additional_details}
-										</TableCell>
-									</TableRow>
+									{skills &&
+										skills.map((elem, index) => (
+											<TableRow key={index}>
+												<TableCell align='left' component='th' scope='row'>
+													{elem.skill}
+												</TableCell>
+												<TableCell align='right'>{elem.level}</TableCell>
+											</TableRow>
+										))}
 								</TableBody>
 							</Table>
 						</TableContainer>

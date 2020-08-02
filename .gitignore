@@ -2,4 +2,5 @@ website/client/admin/node_modules
 website/client/user/node_modules
 
 .history
+server/Tesseract-OCR
 server/__pycache__
