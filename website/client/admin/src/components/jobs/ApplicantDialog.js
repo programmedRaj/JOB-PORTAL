@@ -64,7 +64,7 @@ const ApplicantDialog = ({ open, setOpen, details, userId, jobId }) => {
 			setStatus(res)
 		})
 	}, [])
-	console.log(status)
+	// console.log(status)
 
 	const handleStatusChange = (e) => {
 		setDBStatus(authToken, e.target.name, jobId, e.target.value).then((res) =>
