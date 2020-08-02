@@ -42,9 +42,10 @@ def create_job(naam):
 
         if request.json['is_onlinetest'] == 0:
             resp=only_job()
+            #conn.commit()  uncomment krna jabhi 37th line ko comment krega..
             return resp
 
-            
+
         elif request.json['is_onlinetest'] == 1:
             responnses=only_job()
             if responnses == 200 :
@@ -114,3 +115,5 @@ def update_job(naam):
     finally:
         cur.close()
         conn.close()
+
+
