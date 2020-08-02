@@ -3,14 +3,14 @@ from pyresparser import ResumeParser
 import re
 import pytesseract
 import datefinder
-from find_job_titles import FinderAcora, Finder
+#from find_job_titles import Finder
 
 
 def de_bhai_pdf(dia_kya):
 
-    data = ResumeParser(dia_kya).get_extracted_data()
+    data = ResumeParser('D:/SIH2020/server/uploads/'+dia_kya).get_extracted_data()
 
-    images = convert_from_path(dia_kya)
+    images = convert_from_path('D:/SIH2020/server/uploads/'+dia_kya)
     lam = ''
 
     for i in images:
@@ -21,7 +21,7 @@ def de_bhai_pdf(dia_kya):
         print(data)
         a = ''.join(data['experience']).split(".")
         data['experience'] = a
-        finder = Finder()
+        #finder = Finder()
         yay = []
         dates = []
         for i in data['experience']:
@@ -32,8 +32,8 @@ def de_bhai_pdf(dia_kya):
                 dates.append(match.strftime('%b %Y'))
             if len(dates) != 0:
                 me = ' '.join(i.split(' ')[:3])
-                u = finder.findall(i.replace('\xa0', ' '))
-                a = {'Job title': str(u[0]).split("'")[-2], 'Company name': me, 'dates': dates,
+                #u = finder.findall(i.replace('\xa0', ' '))
+                a = {'Job title':'', 'Company name': me, 'dates': dates,
                      'Description': ' '.join(i.replace('\xa0', '').split(' ')[10:])}
                 yay.append(a)
             dates = []
