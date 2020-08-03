@@ -14,3 +14,4 @@
 ## Additional information
 - Have a look at our recommendation logic <a href='https://github.com/programmedRaj/NC_GEU_MK95_DAVINCICODE/blob/master/recommender/Recommender.ipynb'>here.</a>
 - Have a look at our android app APK <a href='https://github.com/programmedRaj/NC_GEU_MK95_DAVINCICODE/tree/master/app/apk'>here.</a>
+- Have a look at out Platform Screenshots, PPTs and Flowcharts <a href='https://github.com/programmedRaj/NC_GEU_MK95_DAVINCICODE/tree/master/Screenshots%2CPPT%2Cflowcharts'>here.</a>
