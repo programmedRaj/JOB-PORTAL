@@ -124,3 +124,10 @@ def mainMain(skills, level):
                 finalLevel.append(j)
                 break
     return main(finalSkill, finalLevel)
+
+
+
+
+
+def job_recommendations():
+    print('h')
