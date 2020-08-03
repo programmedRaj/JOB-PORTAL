@@ -71,6 +71,10 @@ class _EditApplyState extends State<EditApply> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final qna =
+          Provider.of<Question>(context, listen: false).getqna(widget.jobid);
+    });
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     //  var q =   Provider.of<Question>(context, listen: false).getqna(widget.jobid);
@@ -106,10 +110,7 @@ class _EditApplyState extends State<EditApply> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final qna =
-          Provider.of<Question>(context, listen: false).getqna(widget.jobid);
-    });
+
     final qna = Provider.of<Question>(context);
     // print(qna.slides.length);
 
@@ -214,7 +215,6 @@ class _EditApplyState extends State<EditApply> {
                                       activeColor:
                                           Theme.of(context).accentColor,
                                       onChange: (label, index) {
-                                        print(qna.slide[i].valid);
                                         if (qna.slide[i].valid == label) {
                                           setState(() {
                                             score = score + 10;

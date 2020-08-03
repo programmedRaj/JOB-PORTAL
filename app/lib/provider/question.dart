@@ -12,9 +12,7 @@ import 'package:sih/api/service/baseurl.dart';
 class Question with ChangeNotifier {
   BaseUrl baseUrl = BaseUrl();
   Future getqna(String jobid) async {
-    var bodymsg = json.encode({
-      "job_id": "ascorewx"
-    }); // pandey ko kal jo nhi a raha tha uska vo chaiye json  kyaaa???cll kr
+    var bodymsg = json.encode({"job_id": jobid});
     var response = await retry(
       () => http
           .post(baseUrl.quiz,
@@ -29,25 +27,26 @@ class Question with ChangeNotifier {
 
     var k = response.body;
     var n = json.decode(k);
-    // var m
-    removess();
+
+    // removess();
     for (int j = 0; j < n['qna'].length; j++) {
-      adds(json.decode(n['qna'][0]['questions']));
+      adds(json.decode(n['qna'][j]['questions']));
     }
 
     removes();
     for (int i = 0; i < ss.length; i++) {
       for (int k = 0; k < ss[i].length; k++) {
         addslide(
-          question: ss[i][k]['Question'],
-          a1: ss[i][k]['A1'],
-          a2: ss[i][k]['A2'],
-          a3: ss[i][k]['A3'],
-          a4: ss[i][k]['A4'],
-          valid: ss[i][k]['valid'],
+          question: ss[i][k]['Q'],
+          a1: ss[i][k]['A']['1'],
+          a2: ss[i][k]['A']['2'],
+          a3: ss[i][k]['A']['3'],
+          a4: ss[i][k]['A']['4'],
+          valid: ss[i][k]['A'][ss[i][k]['A']['valid']],
         );
       }
     }
+    //  print(json.decode(n['qna'][j]['questions'])[0]['Q']);
   }
 
   // Map<String, Qna> qna = {};
