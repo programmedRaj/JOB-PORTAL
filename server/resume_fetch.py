@@ -63,9 +63,7 @@ def fetch_projects(naam):
 
 
 def fetch_skills(naam):
-    skills = []
-    skill_d={}
-    level = []
+    skills = {}
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
     cur1 = conn.cursor(pymysql.cursors.DictCursor)
@@ -76,12 +74,8 @@ def fetch_skills(naam):
             cur1.execute("Select title from skills Where skill_id = '" +
                          str(r['skill_id'])+"';")
             k = cur1.fetchone()
-            skills.append(k['title'])
-            level.append(r['level'])
-        skill_d['skill']= skills
-        skill_d['levelOFskill']= level   # yeh values jaarha hai but o/p reqd ... {"skill":[sdds,sdsd.sdsd]} ruk phone karta hai  8080923621 pr kr k
-        records=skill_d
-        return records
+            skills[k['title']] = r['level']
+        return skills
     return 'empty'
 
 
