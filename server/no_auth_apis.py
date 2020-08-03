@@ -111,7 +111,7 @@ def fetch_jobs():
         cur.execute(all+start_end)
 
     else:
-        cur.execute(all+";")
+        cur.execute(all+" ORDER BY posted_on desc;")
 
     records = cur.fetchall()
     if records:
