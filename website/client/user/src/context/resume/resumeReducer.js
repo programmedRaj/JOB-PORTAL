@@ -10,6 +10,7 @@ import {
   ADD_WORKEX,
   ADD_SKILLS,
   ADD_TRAININGS,
+  RESUME_OCR,
 } from "./types";
 
 export default (state, action) => {
@@ -18,6 +19,11 @@ export default (state, action) => {
       return {
         ...state,
         resume: action.payload,
+      };
+    case RESUME_OCR:
+      return {
+        ...state,
+        scanData: action.payload,
       };
 
     case ADD_EDU:
@@ -39,7 +45,7 @@ export default (state, action) => {
     case SET_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case SET_CURRENT:
       return {

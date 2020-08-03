@@ -1,4 +1,5 @@
 export const FETCH_RESUME = "FETCH_RESUME";
+export const RESUME_OCR = "RESUME_OCR";
 export const ADD_EDU = "ADD_EDU";
 export const ADD_JOBS = "ADD_JOBS";
 export const ADD_PROJECTS = "ADD_PROJECTS";

@@ -79,8 +79,8 @@ const Home = (props) => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+      <Grid container spacing={5}>
+        <Grid item md={9}>
           <Paper elevation={8} square className={classes.paper}>
             <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
               <Grid
@@ -154,17 +154,51 @@ const Home = (props) => {
               </Grid>
             </form>
           </Paper>
-        </Grid>
 
-        <Grid item xs={12} md={4}>
+          {isAuth ? (
+            <Grid
+              container
+              direction='row'
+              justify='center'
+              alignItems='center'
+              spacing={3}
+            >
+              <Grid item md xs={12}>
+                <Typography
+                  style={{
+                    marginTop: "10rem",
+                    textAlign: "center",
+                    fontWeight: "500",
+                  }}
+                  variant='h4'
+                  gutterBottom
+                >
+                  Recommended Courses
+                </Typography>
+                <CourseCarousel job={false} recommendations={recommendations} />
+              </Grid>
+            </Grid>
+          ) : (
+            <span></span>
+          )}
+        </Grid>
+        <Grid
+          style={{
+            borderLeftWidth: "1px",
+            borderLeftStyle: "solid",
+            borderLeftColor: "#0000001f",
+          }}
+          item
+          md={3}
+        >
           {current.length > 0 && (
             <Typography
               style={{
-                marginTop: "8rem",
+                marginTop: "3rem",
                 textAlign: "center",
                 fontWeight: "500",
               }}
-              variant='h4'
+              variant='h6'
               gutterBottom
             >
               Recently Viewed Jobs
@@ -176,60 +210,6 @@ const Home = (props) => {
             ))}
         </Grid>
       </Grid>
-
-      {/* {current.length > 2 ? (
-        <Grid
-          container
-          direction='row'
-          justify='center'
-          alignItems='center'
-          spacing={3}
-        >
-          <Grid item md xs={12}>
-            <Typography
-              style={{
-                marginTop: "10rem",
-                textAlign: "center",
-                fontWeight: "500",
-              }}
-              variant='h4'
-              gutterBottom
-            >
-              Recently Viewed Jobs
-            </Typography>
-            <CourseCarousel job={true} recommendations={current} />
-          </Grid>
-        </Grid>
-      ) : (
-        <span></span>
-      )} */}
-
-      {isAuth ? (
-        <Grid
-          container
-          direction='row'
-          justify='center'
-          alignItems='center'
-          spacing={3}
-        >
-          <Grid item md xs={12}>
-            <Typography
-              style={{
-                marginTop: "10rem",
-                textAlign: "center",
-                fontWeight: "500",
-              }}
-              variant='h4'
-              gutterBottom
-            >
-              Recommended Courses
-            </Typography>
-            <CourseCarousel job={false} recommendations={recommendations} />
-          </Grid>
-        </Grid>
-      ) : (
-        <span></span>
-      )}
     </>
   );
 };
