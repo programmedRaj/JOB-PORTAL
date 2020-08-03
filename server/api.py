@@ -82,6 +82,11 @@ def fetch_jobs():
     response = no_auth.fetch_jobs()
     return response
 
+
+@app.route('/latestjobs')
+def latestjobs():
+    response = no_auth.latest_jobs()
+    return response
 # USER SIDE REQUESTS.
 
 
@@ -460,7 +465,15 @@ def recommendations():
         response = recommend.mainMain(skill_list, level_list)
         return response
 
-
+@app.route('/job-recommendations')
+@check_for_token
+def job_recom():
+    token = request.headers['Authorization']
+    username = jwt.decode(token, app.config['SECRET_KEY'])
+    getdetails=getresume.fetch_jobs(username)
+    recommendations=recommend.job_recommendations(getdetails)
+    return recommendations
+    
 @app.route('/resume-ocr', methods=['POST'])
 @check_for_token
 def resume_ocr():

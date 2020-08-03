@@ -148,3 +148,14 @@ def skillcounts():
     return resp
     cur.close()
     conn.close()
+
+
+def latest_jobs():
+    conn = mysql.connect()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute("Select * from job ORDER BY posted_on desc LIMIT 5;")
+    records = cur.fetchall()
+    if records:
+        resp = jsonify(records)
+        resp.status_code = 200
+        return resp
