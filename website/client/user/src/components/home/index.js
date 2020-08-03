@@ -200,7 +200,7 @@ const Home = (props) => {
           item
           md={3}
         >
-          {current.length > 0 && (
+          {current && current.length > 0 && (
             <Typography
               style={{
                 marginTop: "3rem",
@@ -213,11 +213,12 @@ const Home = (props) => {
               Recently Viewed Jobs
             </Typography>
           )}
-          {current.length > 0 &&
+          {current &&
+            current.length > 0 &&
             current.map((job, index) => (
               <JobAccordion index={index} job={job} />
             ))}
-          {recomJobs.length > 0 && (
+          {recomJobs && recomJobs.length > 0 && (
             <Typography
               style={{
                 marginTop: "3rem",
@@ -230,7 +231,8 @@ const Home = (props) => {
               Recommended Jobs
             </Typography>
           )}
-          {recomJobs.length > 0 &&
+          {recomJobs &&
+            recomJobs.length > 0 &&
             recomJobs.map((job, index) => (
               <JobAccordion index={index} job={job} />
             ))}
