@@ -58,8 +58,8 @@ Drawer draw(BuildContext context, double height, bool isDarkk) {
           leading: Icon(Icons.edit),
           title: Text(delegate.edit_resume),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (ctx) => Editresume(isDarkk)));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => Editresume(isDark: isDarkk)));
           },
         ),
         ListTile(

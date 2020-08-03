@@ -9,6 +9,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="sih"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -43,5 +44,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+            <service android:name="cachet.plugins.notifications.NotificationListener"
+    android:label="notifications"
+    android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+    <intent-filter>
+        <action android:name="android.service.notification.NotificationListenerService" />
+    </intent-filter>
+</service>
     </application>
 </manifest>

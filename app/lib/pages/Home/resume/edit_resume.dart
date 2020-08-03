@@ -4,9 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/language/generated/l10n.dart';
-import 'package:sih/pages/Auth/phoneauth.dart';
 import 'package:sih/pages/Home/resume/section.dart/job_sec.dart';
 import 'package:sih/pages/Home/resume/section.dart/projectsec.dart';
 
@@ -18,7 +16,7 @@ import 'section.dart/trainingsec.dart';
 
 class Editresume extends StatefulWidget {
   final bool isDark;
-  Editresume(this.isDark);
+  Editresume({this.isDark});
   @override
   _EditresumeState createState() => _EditresumeState();
 }

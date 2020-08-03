@@ -33,6 +33,10 @@ class _HomeState extends State<Home> {
   bool listen = false;
   BaseUrl baseUrl = BaseUrl();
   String fname;
+
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+
   // ignore: missing_return
   Future<Internships> getjobs(String title, String start, String end,
       String location, InternshipDetialsProvider job) async {
@@ -57,25 +61,43 @@ class _HomeState extends State<Home> {
     job.remove();
     for (int i = 0; i < n.length; i++) {
       job.add(
-          jobid: n[i]['job_id'],
-          closingdate: n[i]['closing_date'],
-          datetimeinterview: n[i]['date_time_interview'],
-          description: n[i]['description'],
-          extrainfo: n[i]['extra_info'],
-          interviewloc: n[i]['interveiw_loc'],
-          stipend: n[i]['stipend'],
-          interviewmode: n[i]['interview_mode'],
-          nopositions: n[i]['no_postions'],
-          postedon: n[i]['posted_on'],
-          qualifications: n[i]['qualification'],
-          posnames: n[i]['pos_names'],
-          isonlinetest: n[i]['is_online_test']);
+        jobid: n[i]['job_id'],
+        closingdate: n[i]['closing_date'],
+        datetimeinterview: n[i]['date_time_interview'],
+        description: n[i]['description'],
+        extrainfo: n[i]['extra_info'],
+        interviewloc: n[i]['interveiw_loc'],
+        stipend: n[i]['stipend'],
+        interviewmode: n[i]['interview_mode'],
+        nopositions: n[i]['no_postions'],
+        postedon: n[i]['posted_on'],
+        qualifications: n[i]['qualification'],
+        posnames: n[i]['pos_names'],
+        isonlinetest: n[i]['is_online_test'],
+        umeet: n[i]['meetid'],
+      );
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
+  // void initState() {
+  //   super.initState();
+  //   var initializationSettingsAndroid =
+  //       AndroidInitializationSettings('flutter_devs');
+  //   var initializationSettingsIOs = IOSInitializationSettings();
+  //   var initSetttings = InitializationSettings(
+  //       initializationSettingsAndroid, initializationSettingsIOs);
+
+  //   flutterLocalNotificationsPlugin.initialize(initSetttings,
+  //       onSelectNotification: onSelectNotification);
+  // }
+
+  // ignore: missing_return
+  Future onSelectNotification(String payload) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return NewScreen(
+        payload: payload,
+      );
+    }));
   }
 
   @override
@@ -114,14 +136,6 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          IconButton(
-              icon: Icon(
-                Icons.search,
-                color: isDarkk
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).accentColor,
-              ),
-              onPressed: () {}),
           IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
           IconButton(
               icon: Icon(isDark ? Icons.wb_sunny : Icons.brightness_2),
@@ -256,6 +270,38 @@ class _HomeState extends State<Home> {
           ),
         ],
       )),
+    );
+  }
+
+  // Future<void> cancelNotification() async {
+  //   await flutterLocalNotificationsPlugin.cancel(0);
+  // }
+
+  // showNotification() async {
+  //   var android = new AndroidNotificationDetails(
+  //       'id', 'channel ', 'description',
+  //       priority: Priority.High, importance: Importance.Max);
+  //   var iOS = new IOSNotificationDetails();
+  //   var platform = new NotificationDetails(android, iOS);
+  //   await flutterLocalNotificationsPlugin.show(
+  //       0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
+  //       payload: 'Welcome to the Local Notification demo ');
+  // }
+}
+
+class NewScreen extends StatelessWidget {
+  String payload;
+
+  NewScreen({
+    @required this.payload,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(payload),
+      ),
     );
   }
 }

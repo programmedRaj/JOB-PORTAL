@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         return _buildTheme(color, isDark);
       },
       defaultColor: myColor[100],
-      defaultIsDark: false,
+      defaultIsDark: true,
       themedWidgetBuilder: (BuildContext context, ThemeData theme) {
         return MultiProvider(
             providers: [
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
-                // GlobalCupertinoLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
               ],
               supportedLocales: S.delegate.supportedLocales,
               initialRoute: '/',
@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _buildTheme(Color accentColor, bool isDark) {
-    final ThemeData base = ThemeData.dark();
+    final ThemeData base = isDark ? ThemeData.dark() : ThemeData.light();
 
     return base.copyWith(
         iconTheme: IconThemeData(color: isDark ? myColor[50] : myColor[100]),

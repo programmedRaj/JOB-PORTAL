@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import QuizForm from './QuizForm'
 
 import { AuthContext } from '../../context/authContext/authContext'
 import { JobContext } from '../../context/jobContext/jobContext'
@@ -60,11 +61,18 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 		extra_info: job ? job.Links : '',
 		interview_mode: '',
 		interview_location: '',
-		is_onlinetest: ''
+		is_onlinetest: 0
 	})
 
+	const [quizOpen, setQuizOpen] = useState(false)
+	const [questions, setQuestions] = useState([])
+
+	const handleQuizOpen = () => {
+		setQuizOpen(true)
+	}
+
 	const handleAddJob = () => {
-		addJob(authToken, jobDetails).then((res) => {
+		addJob(authToken, jobDetails, questions).then((res) => {
 			if (res) {
 				showSnack('New job added')
 			} else {
@@ -187,12 +195,12 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 								fullWidth
 								disablePast
 								value={jobDetails.closing_date}
-								onChange={(e) =>
+								onChange={(e) => {
 									setJobDetails({
 										...jobDetails,
-										closing_date: e
+										closing_date: e._i
 									})
-								}
+								}}
 							/>
 						</Grid>
 						<Grid item sm={6} xs={12}>
@@ -207,7 +215,7 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 								onChange={(e) =>
 									setJobDetails({
 										...jobDetails,
-										datetime_interview: e
+										datetime_interview: e._i
 									})
 								}
 							/>
@@ -263,44 +271,68 @@ const AddJobInputs = ({ renderVar, totalJobs, prevJob, nextJob, job }) => {
 										})
 									}
 								>
-									<MenuItem value='1'>Yes</MenuItem>
-									<MenuItem value='0'>No</MenuItem>
+									<MenuItem value={1}>Yes</MenuItem>
+									<MenuItem value={0}>No</MenuItem>
 								</Select>
 							</FormControl>
 						</Grid>
 					</Grid>
-					<Box mt={3} align='right'>
-						{totalJobs > 1 ? (
-							<Button
-								style={{ marginRight: '10px' }}
-								color='primary'
-								onClick={prevJob}
-								variant='contained'
-							>
-								<ChevronLeftIcon />
-							</Button>
-						) : null}
+					<Box display='flex' justifyContent='space-between'>
+						<Box mt={3} display='inline-block'>
+							{jobDetails.is_onlinetest === 1 ? (
+								<Button
+									onClick={handleQuizOpen}
+									color='primary'
+									variant='contained'
+								>
+									Add Questions
+								</Button>
+							) : (
+								<span />
+							)}
+						</Box>
+						<Box mt={3} display='inline-block'>
+							{totalJobs > 1 ? (
+								<Button
+									style={{ marginRight: '10px' }}
+									color='primary'
+									onClick={prevJob}
+									variant='contained'
+								>
+									<ChevronLeftIcon />
+								</Button>
+							) : null}
 
-						<Button
-							color='secondary'
-							onClick={handleAddJob}
-							variant='contained'
-						>
-							{t('Add Job')}
-						</Button>
-						{totalJobs > 1 ? (
 							<Button
-								style={{ marginLeft: '10px' }}
-								color='primary'
-								onClick={nextJob}
+								color='secondary'
+								onClick={handleAddJob}
 								variant='contained'
+								disabled={
+									jobDetails.is_onlinetest === 1 && questions.length === 0
+								}
 							>
-								<ChevronRightIcon />
+								{t('Add Job')}
 							</Button>
-						) : null}
+							{totalJobs > 1 ? (
+								<Button
+									style={{ marginLeft: '10px' }}
+									color='primary'
+									onClick={nextJob}
+									variant='contained'
+								>
+									<ChevronRightIcon />
+								</Button>
+							) : null}
+						</Box>
 					</Box>
 				</Container>
 			</Paper>
+			<QuizForm
+				quizOpen={quizOpen}
+				setQuizOpen={setQuizOpen}
+				questions={questions}
+				setQuestions={setQuestions}
+			/>
 		</>
 	)
 }

@@ -484,6 +484,21 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = set(['pdf'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+@app.route('/quizy' ,methods=['POST'])
+def ques():
+    conn = mysql.connect()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute("Select * from quiz Where jobid = '" +
+                str(request.json['job_id'])+"';")
+    records = cur.fetchall()
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'qna':records})
+
+
+
     # ADMIN SIDE REQUESTS.
 
 
@@ -565,7 +580,7 @@ def upload_file():
         resp = jsonify({'message': 'No file selected for uploading'})
         resp.status_code = 400
         return resp
-    if file and allowed_file(file.filename):
+    if file and allowedd_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         s = extractpdf.yoohoo(filename)
@@ -631,7 +646,7 @@ def upload_file():
     #     return resp
 
 
-def allowed_file(filename):
+def allowedd_file(filename):
     ALLOWED_EXTENSIONS = set(['pdf'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -663,7 +678,18 @@ def crud_job():
 
     if(request.json['mode'] == "add"):
         resp = job.create_job(username)
+        if resp == 200 or resp == 2000:
+            resp = jsonify({'message': 'success'})
+            resp.status_code = 200
+        elif resp == 401:
+            resp = jsonify({'message': 'Error posting job.'})
+            resp.status_code = 401
+        else:
+            resp = jsonify(
+                {'message': 'Error while adding quiz but job added. '})
+            resp.status_code = 403
         return resp
+
     elif(request.json['mode'] == "delete"):
         resp = job.delete_job(username)
         return resp

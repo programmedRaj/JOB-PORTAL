@@ -53,14 +53,15 @@ export const JobProvider = ({ children }) => {
 			.catch((error) => console.log('error', error))
 	}
 
-	const addJob = (token, jobDetails) => {
+	const addJob = (token, jobDetails, questions) => {
 		let myHeaders = new Headers()
 		myHeaders.append('Authorization', token)
 		myHeaders.append('Content-Type', 'application/json')
 
 		let raw = JSON.stringify({
-			...jobDetails,
-			mode: 'add'
+			mode: 'add',
+			qnalist: JSON.stringify(questions),
+			...jobDetails
 		})
 
 		let requestOptions = {

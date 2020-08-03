@@ -52,11 +52,11 @@ const JobDialog = ({ detailsOpen, setDetailsOpen, job }) => {
 
 	const [applicants, setApplicants] = useState([])
 
-	useState(() =>
+	useEffect(() => {
 		getApplicants(authToken, job.job_id).then((res) =>
 			res ? setApplicants(res) : null
 		)
-	)
+	}, [])
 
 	const handleClose = () => {
 		setDetailsOpen(false)

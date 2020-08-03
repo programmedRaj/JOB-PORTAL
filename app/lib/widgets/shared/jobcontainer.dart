@@ -54,7 +54,7 @@ class _JobContainerState extends State<JobContainer> {
         children: [
           Container(
               margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 15),
-              height: widget.size ? height * 0.45 : height * 0.43,
+              height: widget.size ? height * 0.4 : height * 0.43,
               width: width,
               decoration: BoxDecoration(
                   color: widget.isDark

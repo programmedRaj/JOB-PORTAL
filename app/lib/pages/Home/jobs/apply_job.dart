@@ -44,7 +44,8 @@ class _AppliedJobsState extends State<AppliedJobs> {
         appliedJobs.addj(
             jobid: n['appliedjobs'][i]['job_id'],
             appliedon: n['appliedjobs'][i]['applied_on'],
-            status: n['appliedjobs'][i]['status']);
+            status: n['appliedjobs'][i]['status'],
+            meetid: n['appliedjobs'][i]['meetid']);
       }
     }
   }
@@ -122,9 +123,11 @@ class _AppliedJobsState extends State<AppliedJobs> {
                   itemCount: appliedspro.jobs.length,
                   itemBuilder: (context, index) {
                     return HireContainer(
-                        jobid: appliedspro.jobs[index].jobid,
-                        isDark: isDarkk,
-                        status: appliedspro.jobs[index].status);
+                      jobid: appliedspro.jobs[index].jobid,
+                      isDark: isDarkk,
+                      status: appliedspro.jobs[index].status,
+                      meetid: appliedspro.jobs[index].meetid,
+                    );
                   }),
         )));
   }

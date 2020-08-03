@@ -16,17 +16,18 @@ class HireContainer extends StatefulWidget {
   final String status;
   final bool isDark;
   final String jobid;
-  const HireContainer({
-    this.status,
-    this.jobid,
-    // this.posname,
-    // this.nopos,
-    // this.closingdate,
-    // this.interviewloc,
-    // this.interviewmode,
-    // this.stipend,
-    this.isDark,
-  });
+  final String meetid;
+  const HireContainer(
+      {this.status,
+      this.jobid,
+      // this.posname,
+      // this.nopos,
+      // this.closingdate,
+      // this.interviewloc,
+      // this.interviewmode,
+      // this.stipend,
+      this.isDark,
+      this.meetid});
 
   @override
   _HireContainerState createState() => _HireContainerState();
@@ -240,9 +241,37 @@ class _HireContainerState extends State<HireContainer> {
                                             ),
                                             onPressed: () {}),
                                       ),
-                              )
+                              ),
                             ],
                           ),
+                          Row(
+                            children: [
+                              Container(
+                                alignment: Alignment.bottomLeft,
+                                margin: EdgeInsets.only(top: 4),
+                                child: Text(
+                                  "Unique Meet ID :",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Theme.of(context).accentColor),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 4),
+                                child: widget.meetid == null
+                                    ? Container()
+                                    : Text(
+                                        widget.meetid,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                                Theme.of(context).accentColor),
+                                      ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ))

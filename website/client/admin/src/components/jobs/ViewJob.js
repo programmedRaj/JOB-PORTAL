@@ -27,7 +27,7 @@ const ViewJob = () => {
 					</TypoGraphy>
 					<Grid container spacing={5}>
 						{jobs && jobs.length > 0 ? (
-							jobs.map((job, index) => (
+							jobs.reverse().map((job, index) => (
 								<Grid key={index} item xs={12} sm={6}>
 									<JobCard job={job} />
 								</Grid>
