@@ -137,7 +137,7 @@ def job_recommendations(getexp):
     jobid=[]
 
     reommendedjobs=[]
-
+    reommendedjob=[]
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
     cur.execute("Select job_id,pos_names from job  ORDER BY posted_on desc;")
@@ -156,8 +156,11 @@ def job_recommendations(getexp):
     if not reommendedjobs :
         resp=no_apis.latest_jobs()
     else:
-        resp =jsonify({"recomjobs":reommendedjobs,"latest_jobs":"no"})
+        for i in reommendedjobs:
+            reommendedjob.append({'jobId':i})
+        resp =jsonify({"op":reommendedjob,"latest_jobs":"no"})
 
     return resp
+
 
 
