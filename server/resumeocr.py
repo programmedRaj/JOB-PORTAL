@@ -16,7 +16,7 @@ def de_bhai_pdf(dia_kya):
     lam = ''
 
     for i in images:
-        pytesseract.pytesseract.tesseract_cmd = 'D:/Tesseract-OCR/tesseract.exe'
+        pytesseract.pytesseract.tesseract_cmd = os.getcwd()+'/Tesseract-OCR/tesseract.exe'
         text = pytesseract.image_to_string(i)
         lam = lam+text
     if data['experience'] != None:

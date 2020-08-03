@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
@@ -13,8 +14,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Box from "@material-ui/core/Box";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Skeleton from "@material-ui/lab/Skeleton";
+import copy from "copy-to-clipboard";
 
 import { AuthContext } from "../../context/auth/AuthContext";
+import { AlertContext } from "../../context/alert/AlertContext";
 import { ResumeContext } from "../../context/resume/ResumeContext";
 import PersonalDetails from "./PersonalDetails";
 import EducationDetails from "./EducationDetails";
@@ -70,11 +73,24 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "15px",
     paddingRight: "15px",
   },
+  copyPaper: {
+    height: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(2),
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(4),
+    },
+    padding: theme.spacing(1),
+    maxHeight: "60vh",
+    overflowY: "scroll",
+  },
 }));
 
 const Resume = () => {
   const classes = useStyles();
   const { user } = useContext(AuthContext);
+  const { showAlert } = useContext(AlertContext);
   const { t } = useTranslation();
   const { resume, scanResume, loading, scanData, fetchResume } = useContext(
     ResumeContext
@@ -88,6 +104,11 @@ const Resume = () => {
     fetchResume(localAuthToken);
     // eslint-disable-next-line
   }, []);
+
+  const handleCopyToClipboard = (e) => {
+    copy(e.target.value);
+    showAlert("Copied to clipboard");
+  };
 
   const handleUploadedFile = (e) => {
     const files = Array.from(e.target.files);
@@ -177,7 +198,7 @@ const Resume = () => {
         </Paper>
       </Container>
 
-      <Container maxWidth='md'>
+      <Container maxWidth='lg'>
         {loading ? (
           <>
             <LinearProgress color='secondary' />
@@ -187,6 +208,144 @@ const Resume = () => {
               width='100%'
               height='100%'
             >
+              <Grid container spacing={2}>
+                <Grid item md={8}>
+                  <Paper elevation={24} className={classes.paper}>
+                    <Container>
+                      <Grid container spacing={3}>
+                        <PersonalDetails
+                          user={user}
+                          personal_details={personal_details}
+                        />
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Education
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                          <EducationDetails
+                            user={user}
+                            edu_details={edu_details}
+                          />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Jobs
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                          <JobsDetails user={user} job_details={job_details} />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Projects
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                          <ProjectDetails
+                            user={user}
+                            projects_list={projects_list}
+                          />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Skills
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={8}>
+                          <SkillDetails user={user} skills_list={skills_list} />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Trainings
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                          <TrainingDetails
+                            user={user}
+                            trainings_list={trainings_list}
+                          />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={3}>
+                          <Typography component='h6' variant='h6'>
+                            Work Samples
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                          <WorkDetails
+                            user={user}
+                            work_examples={work_examples}
+                          />
+                        </Grid>
+                      </Grid>
+
+                      <Divider className={classes.dividePrettier} />
+                    </Container>
+                  </Paper>
+                </Grid>
+
+                <Grid item md={4}>
+                  <Paper className={classes.copyPaper}>
+                    <Box p={1}>
+                      <Typography color='textSecondary' variant='subtitle2'>
+                        {t("Other relevant data")}
+                      </Typography>
+                    </Box>
+                    {scanData && scanData["op"] ? (
+                      scanData.op.experience.map((text, index) => (
+                        <TextField
+                          key={index}
+                          margin='dense'
+                          variant='outlined'
+                          fullWidth
+                          multiline
+                          value={text}
+                          onClick={handleCopyToClipboard}
+                        />
+                      ))
+                    ) : (
+                      <Typography variant='subtitle2'>
+                        {t("No additional data found")}
+                      </Typography>
+                    )}
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Skeleton>
+          </>
+        ) : (
+          <Grid container spacing={2}>
+            <Grid item md={8}>
               <Paper elevation={24} className={classes.paper}>
                 <Container>
                   <Grid container spacing={3}>
@@ -283,102 +442,35 @@ const Resume = () => {
                   <Divider className={classes.dividePrettier} />
                 </Container>
               </Paper>
-            </Skeleton>
-          </>
-        ) : (
-          <Paper elevation={24} className={classes.paper}>
-            <Container>
-              <Grid container spacing={3}>
-                <PersonalDetails
-                  user={user}
-                  personal_details={personal_details}
-                />
-              </Grid>
+            </Grid>
 
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Education
+            <Grid item md={4}>
+              <Paper className={classes.copyPaper}>
+                <Box p={1}>
+                  <Typography color='textSecondary' variant='subtitle2'>
+                    {t("Other relevant data")}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <EducationDetails user={user} edu_details={edu_details} />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Jobs
+                </Box>
+                {scanData && scanData["op"] ? (
+                  scanData.op.experience.map((text, index) => (
+                    <TextField
+                      key={index}
+                      margin='dense'
+                      variant='outlined'
+                      fullWidth
+                      multiline
+                      value={text.Description}
+                      onClick={handleCopyToClipboard}
+                    />
+                  ))
+                ) : (
+                  <Typography variant='subtitle2'>
+                    {t("No additional data found")}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <JobsDetails user={user} job_details={job_details} />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Projects
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <ProjectDetails user={user} projects_list={projects_list} />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Skills
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={8}>
-                  <SkillDetails user={user} skills_list={skills_list} />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Trainings
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <TrainingDetails
-                    user={user}
-                    trainings_list={trainings_list}
-                  />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <Typography component='h6' variant='h6'>
-                    Work Samples
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <WorkDetails user={user} work_examples={work_examples} />
-                </Grid>
-              </Grid>
-
-              <Divider className={classes.dividePrettier} />
-            </Container>
-          </Paper>
+                )}
+              </Paper>
+            </Grid>
+          </Grid>
         )}
       </Container>
     </>

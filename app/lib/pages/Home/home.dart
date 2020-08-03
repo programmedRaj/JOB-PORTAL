@@ -13,6 +13,9 @@ import 'dart:io';
 import 'package:sih/api/service/baseurl.dart';
 import 'package:sih/pages/Home/resume/add/internship.dart';
 
+import 'package:overlay_support/overlay_support.dart';
+import '../../provider/appliedjobprovider.dart';
+import 'messagenotfication.dart';
 import 'package:retry/retry.dart';
 import 'package:http/http.dart' as http;
 
@@ -79,26 +82,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // void initState() {
-  //   super.initState();
-  //   var initializationSettingsAndroid =
-  //       AndroidInitializationSettings('flutter_devs');
-  //   var initializationSettingsIOs = IOSInitializationSettings();
-  //   var initSetttings = InitializationSettings(
-  //       initializationSettingsAndroid, initializationSettingsIOs);
-
-  //   flutterLocalNotificationsPlugin.initialize(initSetttings,
-  //       onSelectNotification: onSelectNotification);
-  // }
-
   // ignore: missing_return
-  Future onSelectNotification(String payload) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return NewScreen(
-        payload: payload,
-      );
-    }));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +98,22 @@ class _HomeState extends State<Home> {
     final job = Provider.of<InternshipDetialsProvider>(context);
 
     // print(job.internships.length);
+    final ap = Provider.of<AppliedJobProvider>(context);
+
+    for (int i = 0; i < ap.jobs.length; i++) {
+      if (ap.jobs[i].status == 'selected') {
+        showOverlayNotification((context) {
+          return MessageNotification(
+            isDark: isDark,
+            message: messages[3],
+            onReply: () {
+              OverlaySupportEntry.of(context).dismiss();
+              toast('you checked this message');
+            },
+          );
+        }, duration: Duration(milliseconds: 4000));
+      }
+    }
 
     final delegate = S.of(context);
     if (width <= 330) {
@@ -136,7 +136,23 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                showOverlayNotification((context) {
+                  return MessageNotification(
+                    isDark: isDarkk,
+                    message: messages[3],
+                    onReply: () {
+                      OverlaySupportEntry.of(context).dismiss();
+                      toast('you checked this message');
+                    },
+                  );
+                }, duration: Duration(milliseconds: 4000));
+                // showSimpleNotification(
+                //     Text("this is a message from simple notification"),
+                //     background: Colors.green);
+              }),
           IconButton(
               icon: Icon(isDark ? Icons.wb_sunny : Icons.brightness_2),
               onPressed: () {
@@ -270,38 +286,6 @@ class _HomeState extends State<Home> {
           ),
         ],
       )),
-    );
-  }
-
-  // Future<void> cancelNotification() async {
-  //   await flutterLocalNotificationsPlugin.cancel(0);
-  // }
-
-  // showNotification() async {
-  //   var android = new AndroidNotificationDetails(
-  //       'id', 'channel ', 'description',
-  //       priority: Priority.High, importance: Importance.Max);
-  //   var iOS = new IOSNotificationDetails();
-  //   var platform = new NotificationDetails(android, iOS);
-  //   await flutterLocalNotificationsPlugin.show(
-  //       0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
-  //       payload: 'Welcome to the Local Notification demo ');
-  // }
-}
-
-class NewScreen extends StatelessWidget {
-  String payload;
-
-  NewScreen({
-    @required this.payload,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(payload),
-      ),
     );
   }
 }

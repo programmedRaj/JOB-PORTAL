@@ -62,3 +62,22 @@ export const fetchRecommendations = (localAuthToken) => {
       return false;
     });
 };
+
+export const fetchRecomJobs = (localAuthToken) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", localAuthToken);
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return fetch(config.server + "/job-recommendations", requestOptions)
+    .then((response) => response.json())
+    .then((res) => res)
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+};

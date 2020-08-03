@@ -10,7 +10,12 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
 
-import { fetchRecommendations, fetchLocations, fetchTitles } from "./functions";
+import {
+  fetchRecomJobs,
+  fetchRecommendations,
+  fetchLocations,
+  fetchTitles,
+} from "./functions";
 import CourseCarousel from "./CourseCarousel";
 import JobAccordion from "./JobAccordion";
 import { JobsContext } from "../../context/jobs/JobsContext";
@@ -39,6 +44,7 @@ const Home = (props) => {
   const [titles, setTitles] = useState([]);
   const [locations, setLocations] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [recomJobs, setRecomJobs] = useState([]);
   const { current, searchJobs } = useContext(JobsContext);
   const { isAuth } = useContext(AuthContext);
   const history = useHistory();
@@ -55,6 +61,9 @@ const Home = (props) => {
     fetchRecommendations(localAuthToken).then((res) =>
       setRecommendations(res.recommended_courses)
     );
+    fetchRecomJobs(localAuthToken).then((res) => {
+      setRecomJobs(res.op);
+    });
   }, [isAuth]);
 
   const initialValues = {
@@ -206,6 +215,23 @@ const Home = (props) => {
           )}
           {current.length > 0 &&
             current.map((job, index) => (
+              <JobAccordion index={index} job={job} />
+            ))}
+          {recomJobs.length > 0 && (
+            <Typography
+              style={{
+                marginTop: "3rem",
+                textAlign: "center",
+                fontWeight: "500",
+              }}
+              variant='h6'
+              gutterBottom
+            >
+              Recommended Jobs
+            </Typography>
+          )}
+          {recomJobs.length > 0 &&
+            recomJobs.map((job, index) => (
               <JobAccordion index={index} job={job} />
             ))}
         </Grid>

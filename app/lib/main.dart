@@ -2,6 +2,7 @@ import 'package:dynamic_color_theme/dynamic_color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/pages/Auth/phoneauth.dart';
@@ -54,32 +55,35 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider.value(value: AppliedJobProvider()),
               ChangeNotifierProvider.value(value: Question())
             ],
-            child: MaterialApp(
-              title: 'Flutter Demo',
-              debugShowCheckedModeBanner: false,
-              theme: theme,
-              //  ThemeData(
-              //   brightness: Brightness.light,
-              // iconTheme: IconThemeData(color: myColor[100]),
-              // primaryColor: myColor[100], //white
-              // accentColor: myColor[50], //blupurple
-              // highlightColor: myColor[500], //lightgrey
-              // hintColor: myColor[600], //darkblack
-              // errorColor: Colors.red,
+            child: OverlaySupport(
+              child: MaterialApp(
+                title: 'Flutter Demo',
+                debugShowCheckedModeBanner: false,
+                theme: theme,
+                //  ThemeData(
+                //   brightness: Brightness.light,
+                // iconTheme: IconThemeData(color: myColor[100]),
+                // primaryColor: myColor[100], //white
+                // accentColor: myColor[50], //blupurple
+                // highlightColor: myColor[500], //lightgrey
+                // hintColor: myColor[600], //darkblack
+                // errorColor: Colors.red,
 
-              //   visualDensity: VisualDensity.adaptivePlatformDensity,
-              // ),
-              onGenerateTitle: (BuildContext context) => S.of(context).appTitle,
-              localizationsDelegates: [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              initialRoute: '/',
-              onGenerateRoute: RouteGenerator.generateRoute,
-              home: Splash(),
+                //   visualDensity: VisualDensity.adaptivePlatformDensity,
+                // ),
+                onGenerateTitle: (BuildContext context) =>
+                    S.of(context).appTitle,
+                localizationsDelegates: [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                initialRoute: '/',
+                onGenerateRoute: RouteGenerator.generateRoute,
+                home: Splash(),
+              ),
             ));
       },
     );
