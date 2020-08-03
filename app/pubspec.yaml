@@ -50,6 +50,7 @@ dependencies:
   grouped_buttons: ^1.0.4
   notifications: ^1.0.0
   scrollable_positioned_list: ^0.1.7
+  overlay_support: ^1.0.5
   
 
 dev_dependencies:
