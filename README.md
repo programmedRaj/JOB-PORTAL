@@ -6,6 +6,7 @@
 - Run **pip install -r requirements.txt** in "*server/*" to install the python libraries.
 - Download <a href='https://poppler.freedesktop.org/'>Poppler</a> and add it to your system PATH.
 - Download <a href='https://tesseract-ocr.github.io/tessdoc/Home.html'>Tesseract-OCR</a> and place the *Tesseract-OCR* folder in "*server/*".
+- Import the database from "*server/SQL-files-DB/jobsetu sql dumps/*".
 - Run **python api.py** in "*server/*" to run the server.
 - Run **npm start** in "*website/client/admin/*" and "*website/client/user/*" to run the admin and user websites respectively.
 - Run **flutter pub get** and **flutter run** in "*app/*" to run App.
