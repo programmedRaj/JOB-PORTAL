@@ -15,16 +15,27 @@ const ProfileMenu = ({ profileMenuAnchor, setProfileMenuAnchor }) => {
     >
       <div>
         <MenuItem>HELLO</MenuItem>
-        <MenuItem component={Link} to='/resume'>
+        <MenuItem
+          component={Link}
+          to='/resume'
+          onClick={() => setProfileMenuAnchor(null)}
+        >
           Resume
         </MenuItem>
-        <MenuItem component={Link} to='/applied-jobs'>
+        <MenuItem
+          component={Link}
+          to='/applied-jobs'
+          onClick={() => setProfileMenuAnchor(null)}
+        >
           Applied Jobs
         </MenuItem>
-        <MenuItem component={Link} to='/applied-courses'>
+        <MenuItem
+          component={Link}
+          to='/applied-courses'
+          onClick={() => setProfileMenuAnchor(null)}
+        >
           Applied Courses
         </MenuItem>
-        {/* <MenuItem onClick={handleLogout}>Logout</MenuItem> */}
       </div>
     </Menu>
   );

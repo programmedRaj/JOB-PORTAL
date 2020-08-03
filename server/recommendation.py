@@ -4,6 +4,7 @@ from db_config import mysql
 from flask import jsonify
 import pandas as pd
 import resume_fetch as rf
+import no_auth_apis as no_apis
 
 conn = mysql.connect()
 cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -136,21 +137,30 @@ def job_recommendations(getexp):
     jobid=[]
 
     reommendedjobs=[]
-
-
+    reommendedjob=[]
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
-    cur.execute(all+"Select job_id,pos_names from job  ORDER BY posted_on desc;")
+    cur.execute("Select job_id,pos_names from job  ORDER BY posted_on desc;")
+
     for pos in cur:
         posted_jobs.append(pos['pos_names'])
         jobid.append(pos['job_id'])
     for r in getexp:
-        level_list.append(r['level'])
+        level_list.append(r['job_title'])
 
-    for j in posted_jobs:
+    for (j,k) in zip(posted_jobs,jobid) :
         for i in level_list:
             if str(i) == str(j):
-                reommendedjobs.append()
-    return jsonify({'exp':getexp})
+                reommendedjobs.append(k)
+
+    if not reommendedjobs :
+        resp=no_apis.latest_jobs()
+    else:
+        for i in reommendedjobs:
+            reommendedjob.append({'jobId':i})
+        resp =jsonify({"op":reommendedjob,"latest_jobs":"no"})
+
+    return resp
+
 
 

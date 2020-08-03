@@ -11,12 +11,14 @@ import {
   ADD_JOBS,
   ADD_PROJECTS,
   ADD_TRAININGS,
+  RESUME_OCR,
 } from "./types";
-import data from "../../config";
 
 const initialState = {
   resume: {},
+  scanData: {},
   error: null,
+  loading: false,
 };
 
 export const ResumeContext = createContext(initialState);
@@ -220,12 +222,43 @@ export const ResumeProvider = ({ children }) => {
     fetchResume(token);
   };
 
-  const setLoading = () => dispatch({ type: SET_LOADING });
+  const scanResume = (file, fileInput, token) => {
+    let myHeaders = new Headers();
+
+    myHeaders.append("Authorization", token);
+
+    let formdata = new FormData();
+    for (let i = 0; i < file.length; i++) {
+      formdata.append("file", fileInput.files[0], file[i].name);
+    }
+
+    let requestOptions = {
+      method: "POST",
+      body: formdata,
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    setLoading(true);
+    fetch(config.server + "/resume-ocr", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        dispatch({
+          type: RESUME_OCR,
+          payload: result,
+        });
+        setLoading(false);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const setLoading = (value) => dispatch({ type: SET_LOADING, payload: value });
 
   return (
     <ResumeContext.Provider
       value={{
         resume: state.resume,
+        scanData: state.scanData,
+        loading: state.loading,
         error: state.error,
         fetchResume,
         addEdu,
@@ -233,6 +266,8 @@ export const ResumeProvider = ({ children }) => {
         addProjects,
         addTraining,
         addWork,
+        setLoading,
+        scanResume,
       }}
     >
       {children}

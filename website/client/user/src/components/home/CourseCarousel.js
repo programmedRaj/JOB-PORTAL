@@ -39,7 +39,7 @@ const CourseCarousel = ({ job, recommendations }) => {
         <Slider {...slickSettings}>
           {recommendations &&
             recommendations.map((recommendation, index) => (
-              <Box px={3} mb={5} mt={1}>
+              <Box px={1} mb={5} mt={1}>
                 <CourseCard key={index} course={recommendation} />
               </Box>
             ))}

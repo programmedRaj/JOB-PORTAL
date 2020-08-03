@@ -133,9 +133,10 @@ def ucounts():
     rows = cur.fetchall()
     resp = jsonify({"usercounts": len(rows)})
     resp.status_code = 200
-    return resp
     cur.close()
     conn.close()
+    return resp
+    
 
 
 def skillcounts():
@@ -145,10 +146,11 @@ def skillcounts():
     rows = cur.fetchall()
     resp = jsonify({"skillcounts": len(rows)})
     resp.status_code = 200
-    return resp
     cur.close()
     conn.close()
 
+    return resp
+    
 
 def latest_jobs():
     conn = mysql.connect()
@@ -156,6 +158,6 @@ def latest_jobs():
     cur.execute("Select * from job ORDER BY posted_on desc LIMIT 5;")
     records = cur.fetchall()
     if records:
-        resp = jsonify(records)
+        resp = jsonify({"op":records,"latest_jobs":"yes"})
         resp.status_code = 200
         return resp
