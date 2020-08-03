@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 
 import { fetchRecommendations, fetchLocations, fetchTitles } from "./functions";
 import CourseCarousel from "./CourseCarousel";
+import JobAccordion from "./JobAccordion";
 import { JobsContext } from "../../context/jobs/JobsContext";
 import { AuthContext } from "../../context/auth/AuthContext";
 
@@ -78,81 +79,105 @@ const Home = (props) => {
 
   return (
     <>
-      <Paper elevation={8} square className={classes.paper}>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <Grid
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-            spacing={3}
-          >
-            <Grid item md xs={12}>
-              <Autocomplete
-                id='tags-outlined'
-                options={titles}
-                getOptionLabel={(titles) => titles}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant='outlined'
-                    color='secondary'
-                    label={t("Job Title")}
-                    placeholder={t("Job Title")}
-                    type='text'
-                    name='title'
-                    inputRef={register}
-                    error={!!errorField}
-                    helperText={
-                      !!errorField &&
-                      "Enter a job title or location to start a search"
-                    }
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item md xs={12}>
-              <Autocomplete
-                id='tags-outlined'
-                options={locations}
-                getOptionLabel={(locations) => locations}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant='outlined'
-                    color='secondary'
-                    label={t("Location")}
-                    placeholder={t("Location")}
-                    type='text'
-                    name='location'
-                    inputRef={register}
-                    error={!!errorField}
-                    helperText={
-                      !!errorField &&
-                      "Enter a job title or location to start a search"
-                    }
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item md xs={12}>
-              <Button
-                type='submit'
-                variant='contained'
-                color='secondary'
-                className={classes.btoon}
-                fullWidth
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <Paper elevation={8} square className={classes.paper}>
+            <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+              <Grid
+                container
+                direction='row'
+                justify='center'
+                alignItems='center'
+                spacing={3}
               >
-                {t("Find Jobs")}
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Paper>
+                <Grid item md xs={12}>
+                  <Autocomplete
+                    id='tags-outlined'
+                    options={titles}
+                    getOptionLabel={(titles) => titles}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant='outlined'
+                        color='secondary'
+                        label={t("Job Title")}
+                        placeholder={t("Job Title")}
+                        type='text'
+                        name='title'
+                        inputRef={register}
+                        error={!!errorField}
+                        helperText={
+                          !!errorField &&
+                          "Enter a job title or location to start a search"
+                        }
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item md xs={12}>
+                  <Autocomplete
+                    id='tags-outlined'
+                    options={locations}
+                    getOptionLabel={(locations) => locations}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant='outlined'
+                        color='secondary'
+                        label={t("Location")}
+                        placeholder={t("Location")}
+                        type='text'
+                        name='location'
+                        inputRef={register}
+                        error={!!errorField}
+                        helperText={
+                          !!errorField &&
+                          "Enter a job title or location to start a search"
+                        }
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item md xs={12}>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    className={classes.btoon}
+                    fullWidth
+                  >
+                    {t("Find Jobs")}
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Paper>
+        </Grid>
 
-      {current.length > 2 ? (
+        <Grid item xs={12} md={4}>
+          {current.length > 0 && (
+            <Typography
+              style={{
+                marginTop: "8rem",
+                textAlign: "center",
+                fontWeight: "500",
+              }}
+              variant='h4'
+              gutterBottom
+            >
+              Recently Viewed Jobs
+            </Typography>
+          )}
+          {current.length > 0 &&
+            current.map((job, index) => (
+              <JobAccordion index={index} job={job} />
+            ))}
+        </Grid>
+      </Grid>
+
+      {/* {current.length > 2 ? (
         <Grid
           container
           direction='row'
@@ -177,7 +202,7 @@ const Home = (props) => {
         </Grid>
       ) : (
         <span></span>
-      )}
+      )} */}
 
       {isAuth ? (
         <Grid
