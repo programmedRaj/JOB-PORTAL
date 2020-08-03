@@ -33,8 +33,6 @@ const SkillDetails = ({ user, skills_list }) => {
     return ret;
   };
 
-  skills_list && console.log(formatSkill(skills_list));
-
   return (
     <>
       {" "}

@@ -128,16 +128,13 @@ def mainMain(skills, level):
     return main(finalSkill, finalLevel)
 
 
-
-
-
 def job_recommendations(getexp):
-    level_list=[]
-    posted_jobs=[]
-    jobid=[]
+    level_list = []
+    posted_jobs = []
+    jobid = []
 
-    reommendedjobs=[]
-    reommendedjob=[]
+    reommendedjobs = []
+    reommendedjob = []
     conn = mysql.connect()
     cur = conn.cursor(pymysql.cursors.DictCursor)
     cur.execute("Select job_id,pos_names from job  ORDER BY posted_on desc;")
@@ -148,19 +145,16 @@ def job_recommendations(getexp):
     for r in getexp:
         level_list.append(r['job_title'])
 
-    for (j,k) in zip(posted_jobs,jobid) :
+    for (j, k) in zip(posted_jobs, jobid):
         for i in level_list:
             if str(i) == str(j):
                 reommendedjobs.append(k)
 
-    if not reommendedjobs :
-        resp=no_apis.latest_jobs()
+    if not reommendedjobs:
+        resp = no_apis.latest_jobs()
     else:
         for i in reommendedjobs:
-            reommendedjob.append({'jobId':i})
-        resp =jsonify({"op":reommendedjob,"latest_jobs":"no"})
+            reommendedjob.append({'jobId': i})
+        resp = jsonify({"op": reommendedjob, "latest_jobs": "no"})
 
     return resp
-
-
-
