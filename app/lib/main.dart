@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/pages/Auth/phoneauth.dart';
 import 'package:sih/pages/Home/home.dart';
 import 'package:sih/provider/internship.dart';
+import 'package:sih/provider/question.dart';
 import 'package:sih/provider/token.dart';
 import 'package:sih/provider/userprovider.dart';
 import 'language/generated/l10n.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider.value(value: Token()),
               ChangeNotifierProvider.value(value: Courseexact()),
               ChangeNotifierProvider.value(value: AppliedJobProvider()),
-              // ChangeNotifierProvider.value(value: ResumeProvider())
+              ChangeNotifierProvider.value(value: Question())
             ],
             child: MaterialApp(
               title: 'Flutter Demo',

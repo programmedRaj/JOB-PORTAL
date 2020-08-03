@@ -1,0 +1,139 @@
+ ListView.builder(
+
+                scrollDirection: Axis.horizontal,
+                itemCount: qna.slides.length,
+                itemBuilder: (context, i) {
+          return Container(
+            height: height * 0.4,
+            width: width * 0.8,
+            margin: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+                color: widget.isDark
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).disabledColor,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(color: Colors.blueGrey, blurRadius: 5)
+                ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Text(qna.slide[i].question),
+                ),
+                qna.slide[i].isSubmitted
+                    ? IgnorePointer(
+                        child: Container(
+                          child: RadioButtonGroup(
+                              onChange: (label, index) {
+                                setState(() {
+                                  lab = label;
+                                });
+                              },
+                              labels: [
+                                qna.slide[i].a1,
+                                qna.slide[i].a2,
+                                qna.slide[i].a3,
+                                qna.slide[i].a4,
+                              ]),
+                        ),
+                      )
+                    : Container(
+                        child: RadioButtonGroup(
+                            activeColor: Theme.of(context).accentColor,
+                            onChange: (label, index) {
+                              setState(() {
+                                lab = label;
+                              });
+                            },
+                            labels: [
+                              qna.slide[i].a1,
+                              qna.slide[i].a2,
+                              qna.slide[i].a3,
+                              qna.slide[i].a4,
+                            ]),
+                      ),
+                Container(
+                  height: height * 0.04,
+                  width: width * 0.2,
+                  margin: EdgeInsets.only(left: width * 0.45),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          qna.slide[i].isSubmitted = true;
+                        });
+                        if (qna.slide[i].valid == lab) {
+                          setState(() {
+                            score = score + 10;
+                          });
+                        }
+                      },
+                      child: Text('data')),
+                ),
+                Container(
+                  child: qna.slide[i].isSubmitted
+                      ? Text('Your Have Submitted please scroll')
+                      : null,
+                )
+                // Container(
+                //   child: score == 0 || score == null
+                //       ? Text(
+                //           '0',
+                //           style: TextStyle(
+                //               color: Theme.of(context).primaryColor),
+                //         )
+                //       : Text(
+                //           score.toString(),
+                //           style: TextStyle(
+                //               color: Theme.of(context).primaryColor),
+                //         ),
+                // )
+              ],
+            ),
+          );
+                }),
+          Container(
+            width: width,
+            height: height * 0.04,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: qna.slides.length,
+                itemBuilder: (context, i) {
+                  return Container(
+                    margin: EdgeInsets.all(3),
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: Theme.of(context).accentColor,
+                    ),
+                  );
+                }),
+          ),
+
+           Positioned(
+                  top: height * 0.6,
+                  left: 20,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 35),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            for (int i = 0; i < 4; i++)
+                              if (i == _currentPage)
+                                SlideDots(true, widget.isDark)
+                              else
+                                SlideDots(false, widget.isDark)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),

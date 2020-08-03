@@ -5,8 +5,16 @@ class Similar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Text('You Have Successful applied for this job'),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Text('You Have Successful applied for this job'),
+              ),
+            ],
+          ),
         ),
       ),
     );

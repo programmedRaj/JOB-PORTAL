@@ -10,4 +10,5 @@ class BaseUrl {
   final String displayresume = "$basic/resume-details";
   final String enrollcourse = "$basic/enroll-course";
   final String displayenrollcourse = "$basic/user-enrolled-courses";
+  final String quiz = "$basic/quizy";
 }
