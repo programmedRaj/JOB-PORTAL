@@ -35,7 +35,7 @@ const JobCard = ({ job }) => {
 	const [detailsOpen, setDetailsOpen] = useState(false)
 	const [deleteOpen, setDeleteOpen] = useState(false)
 	const { authToken } = useContext(AuthContext)
-	const { deleteJob, getJobs } = useContext(JobContext)
+	const { deleteJob, getJobs, getPostedJobs } = useContext(JobContext)
 	const { showSnack } = useContext(SnackContext)
 
 	const { t } = useTranslation()
@@ -49,6 +49,7 @@ const JobCard = ({ job }) => {
 				setDeleteOpen(false)
 				showSnack('Job Deleted')
 				getJobs(authToken)
+				getPostedJobs(authToken)
 			} else {
 				setDeleteOpen(false)
 				showSnack('Something went wrong')

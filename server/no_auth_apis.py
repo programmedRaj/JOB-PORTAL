@@ -111,7 +111,7 @@ def fetch_jobs():
         cur.execute(all+start_end)
 
     else:
-        cur.execute(all+";")
+        cur.execute(all+" ORDER BY posted_on desc;")
 
     records = cur.fetchall()
     if records:
@@ -133,9 +133,10 @@ def ucounts():
     rows = cur.fetchall()
     resp = jsonify({"usercounts": len(rows)})
     resp.status_code = 200
-    return resp
     cur.close()
     conn.close()
+    return resp
+    
 
 
 def skillcounts():
@@ -145,6 +146,18 @@ def skillcounts():
     rows = cur.fetchall()
     resp = jsonify({"skillcounts": len(rows)})
     resp.status_code = 200
-    return resp
     cur.close()
     conn.close()
+
+    return resp
+    
+
+def latest_jobs():
+    conn = mysql.connect()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute("Select * from job ORDER BY posted_on desc LIMIT 5;")
+    records = cur.fetchall()
+    if records:
+        resp = jsonify({"op":records,"latest_jobs":"yes"})
+        resp.status_code = 200
+        return resp
