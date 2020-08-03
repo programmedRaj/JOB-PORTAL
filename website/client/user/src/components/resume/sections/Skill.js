@@ -1,19 +1,20 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import Chip from "@material-ui/core/Chip";
 
-const EducationDetails = ({ skill }) => {
-  const { skill_id, level } = skill;
-
+const Skill = ({ skill }) => {
   return (
     <>
-      <Typography component='h6' variant='h6'>
-        {skill_id}
-      </Typography>
-      <Typography component='h6' variant='subtitle1'>
-        {level}
-      </Typography>
+      {skill.skill && (
+        <Chip
+          label={skill.skill}
+          variant='outlined'
+          color='secondary'
+          onDelete
+        />
+      )}
     </>
   );
 };
 
-export default EducationDetails;
+export default Skill;
